@@ -24,6 +24,7 @@
 //#define BOARD_PICO_CNC
 //#define BOARD_PICOBOB
 //#define BOARD_PICOBOB_G540
+#define BOARD_PICOBOB_DLX
 //#define BOARD_BTT_SKR_PICO_10 // incomplete and untested!
 //#define BOARD_CNC_BOOSTERPACK
 //#define BOARD_CITOH_CX6000    // C.ITOH CX-6000 HPGL plotter
@@ -43,7 +44,7 @@
 //#define WIFI_ENABLE          0 // Do NOT enable here, enable in CMakeLists.txt!
 //#define WIFI_SOFTAP          1 // Use Soft AP mode for WiFi. NOTE: WIP - not yet complete!
 //#define ETHERNET_ENABLE      0 // Do NOT enable here, enable in CMakeLists.txt!
-//#define _WIZCHIP_         5500 // Selects WIZnet ethernet breakout connected via SPI.
+#define _WIZCHIP_         5500 // Selects WIZnet ethernet breakout connected via SPI.
                                  // Uncomment to enable W5500 chip, default is W5100S. Requires ethernet enabled in CMakeLists.txt.
 //#define WEBUI_ENABLE         1 // Enable ESP3D-WEBUI plugin along with networking and SD card plugins. Requires WiFi enabled.
 //#define WEBUI_AUTH_ENABLE    1 // Enable ESP3D-WEBUI authentication.
@@ -52,7 +53,7 @@
 //#define MPG_ENABLE           1 // Enable MPG interface. Requires serial port and one handshake pin unless
                                  // KEYPAD_ENABLE is set to 2 when mode switching is done by the CMD_MPG_MODE_TOGGLE (0x8B)
                                  // command character. Set both MPG_ENABLE and KEYPAD_ENABLE to 2 to use a handshake pin anyway.
-//#define KEYPAD_ENABLE        1 // Set to 1 for I2C keypad, 2 for other input such as serial data. If KEYPAD_ENABLE is set to 2 
+#define KEYPAD_ENABLE        1 // Set to 1 for I2C keypad, 2 for other input such as serial data. If KEYPAD_ENABLE is set to 2 
                                  // and MPG_ENABLE is uncommented then the serial stream is shared with the MPG.
 //#define DISPLAY_ENABLE       1 // Set to 1 for I2C display protocol, 2 for I2C LED protocol.
 //#define ODOMETER_ENABLE      1 // Odometer plugin.
@@ -69,8 +70,8 @@
 // of axes can be enabled here.
 //#define X_GANGED             1
 //#define X_AUTO_SQUARE        1
-//#define Y_GANGED             1
-//#define Y_AUTO_SQUARE        1
+#define Y_GANGED             1
+#define Y_AUTO_SQUARE        1
 //#define Z_GANGED             1
 //#define Z_AUTO_SQUARE        1
 // For ganged axes the limit switch input (if available) can be configured to act as a max travel limit switch.
@@ -79,8 +80,6 @@
 //#define Y_GANGED_LIM_MAX     1
 //#define Z_GANGED_LIM_MAX     1
 //
-
-//#define _WIZCHIP_ 5500
 
 #if WIFI_ENABLE || ETHERNET_ENABLE || WEBUI_ENABLE
 #define TELNET_ENABLE        1 // Telnet daemon - requires WiFi streaming enabled.
