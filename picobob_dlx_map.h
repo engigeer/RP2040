@@ -99,6 +99,8 @@
 // Define Aux Outputs
 #define AUXOUTPUT0_PORT         GPIO_OUTPUT
 #define AUXOUTPUT0_PIN          7  // GPIO LED
+//#define AUXOUTPUT1_PORT         GPIO_OUTPUT
+//#define AUXOUTPUT1_PIN          21  // GPIO LED
 
 #if I2C_STROBE_ENABLE
 #define I2C_STROBE_PIN          27
