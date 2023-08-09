@@ -30,6 +30,13 @@
 #define BOARD_NAME "PicoBOB Deluxe"
 #define BOARD_URL "https://github.com/Expatria-Technologies/PicoBOB_DLX"
 
+#ifdef PICO_FLASH_SIZE_BYTES
+#undef PICO_FLASH_SIZE_BYTES
+#define PICO_FLASH_SIZE_BYTES (16 * 1024 * 1024)
+#endif
+
+#define LITTLEFS_ENABLE 1
+
 // Define step pulse output pins.
 #define STEP_PORT             GPIO_PIO  // N_AXIS pin PIO SM
 #define STEP_PINS_BASE        22        // N_AXIS number of consecutive pins are used by PIO
@@ -78,6 +85,7 @@
 #ifndef I2C_STROBE_ENABLE
   #define RESET_PIN             3
 #else
+  //reset pin is swapped to keypad when present, frees up additional input.
   #define RESET_PIN             15
 #endif
 
@@ -93,6 +101,7 @@
 #define AUXINPUT0_PIN           6
 #define AUXINPUT1_PIN           15
 #if I2C_STROBE_ENABLE
+//reset pin is swapped to keypad when present, frees up additional input.
   #define AUXINPUT2_PIN         3
 #endif
 

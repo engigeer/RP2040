@@ -560,13 +560,17 @@ static bool irq_claim (irq_type_t irq, uint_fast8_t id, irq_callback_ptr handler
     bool ok;
 
 #if I2C_STROBE_BIT
-    if((ok = irq == IRQ_I2C_Strobe && i2c_strobe.callback == NULL))
+    if((ok = irq == IRQ_I2C_Strobe && i2c_strobe.callback == NULL)){
         i2c_strobe.callback = handler;
+        return ok;
+    }
 #endif
 
 #if SPI_IRQ_BIT
-    if((ok = irq == IRQ_SPI && spi_irq.callback == NULL))
+    if((ok = irq == IRQ_SPI && spi_irq.callback == NULL)){
         spi_irq.callback = handler;
+        return ok;
+    }
 #endif
 
     return ok;
