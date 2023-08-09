@@ -30,6 +30,7 @@
       { "id": "keypad" },
       { "id": "macros" },
       { "id": "bluetooth" },
+      { "id": "fans" },
       { "id": "embroidery" }
     ]
   },
@@ -42,6 +43,7 @@
       "name": "PicoBOB",
       "symbol": "BOARD_PICOBOB",
       "URL": "https://github.com/Expatria-Technologies/PicoBOB",
+      "MAP": "picobob_map.h",
       "caps": {
         "axes": 5,
         "digital_in": 0,
@@ -54,6 +56,7 @@
       "name": "PicoBOB_G540",
       "symbol": "BOARD_PICOBOB_G540",
       "URL": "https://github.com/Expatria-Technologies/PicoBOB",
+      "MAP": "picobob_g540_map.h",
       "caps": {
         "axes": 4,
         "digital_in": 0,
@@ -66,6 +69,7 @@
       "name": "BTT SKR Pico 1.0",
       "symbol": "BOARD_BTT_SKR_PICO_10",
       "URL": "https://biqu.equipment/products/btt-skr-pico-v1-0",
+      "MAP": "btt_skr_pico_10_map.h",
       "caps": {
         "axes": 4,
         "digital_in": 0,
@@ -79,11 +83,14 @@
     {
       "name": "PicoCNC",
       "symbol": "BOARD_PICO_CNC",
-      "URL": "",
+      "URL": "https://github.com/phil-barrett/PicoCNC",
+      "MAP": "pico_cnc_map.h",
       "caps": {
         "axes": 5,
         "digital_in": 4,
         "digital_out": 8,
+        "eeprom": 0,
+        "fram": 0,
         "sdcard": 1,
         "wifi": 1,
         "wiznet": 1,

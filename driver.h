@@ -201,7 +201,7 @@
 #include "motors/trinamic.h"
 #endif
 
-#if MODBUS_ENABLE & MODBUS_RTU_ENABLED
+#if (MODBUS_ENABLE & MODBUS_RTU_ENABLED) && !defined(MODBUS_SERIAL_PORT)
 #define MODBUS_TEST 1
 #else
 #define MODBUS_TEST 0
@@ -297,6 +297,9 @@ bool driver_init (void);
 void board_init (pin_group_pins_t *aux_inputs, pin_group_pins_t *aux_outputs, output_sr_t *reg);
 #else
 void board_init (void);
+#endif
+#if SPI_RST_PORT == GPIO_SR16
+void spi_reset_out (bool on);
 #endif
 
 void ioports_init (pin_group_pins_t *aux_inputs, pin_group_pins_t *aux_outputs);

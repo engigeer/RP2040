@@ -3,7 +3,7 @@
 
   Part of grblHAL
 
-  Copyright (c) 2021-2022 Terje Io
+  Copyright (c) 2021-2023 Terje Io
 
   Grbl is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -30,12 +30,13 @@
 #endif
 
 #define BOARD_NAME "PicoCNC"
+#define BOARD_URL "https://github.com/phil-barrett/PicoCNC"
 #define HAS_BOARD_INIT
 
 typedef union {
     uint32_t value;
     struct {
-        uint32_t aux7_out    :1,
+        uint32_t spi_reset   :1,
                  aux6_out    :1,
                  aux5_out    :1,
                  aux4_out    :1,
@@ -131,6 +132,7 @@ typedef union {
 #define AUX_IO1_PIN         11
 #define AUX_IO2_PIN         12
 #define AUX_IO3_PIN         13
+#define AUX_IO4_PIN         2 // Modbus direction or ethernet CS
 
 #if !(SDCARD_ENABLE || ETHERNET_ENABLE) || !defined(SAFETY_DOOR_PIN)
 #if !(SDCARD_ENABLE || ETHERNET_ENABLE) 
@@ -138,7 +140,8 @@ typedef union {
 #define AUXINPUT1_PIN       AUX_IO1_PIN
 #define AUXINPUT2_PIN       AUX_IO2_PIN
 #if MPG_MODE != 1
-#define AUXINPUT3_PIN       AUX_IO3_PIN
+//#define AUXINPUT3_PIN       AUX_IO3_PIN
+#define AUXOUTPUT0_PWM_PIN AUX_IO3_PIN
 #endif
 #ifndef SAFETY_DOOR_PIN
 #define AUXINPUT4_PIN       9   
@@ -148,6 +151,8 @@ typedef union {
 #endif
 #endif
 
+#define AUXOUTPUT0_PWM_PIN AUX_IO3_PIN
+
 #if I2C_ENABLE
 #define I2C_PORT            0
 #define I2C_SDA             20
@@ -155,26 +160,51 @@ typedef union {
 #endif
 
 #if SDCARD_ENABLE
-#define SPI_PORT            1
-#define SPI_SCK_PIN         AUX_IO0_PIN
-#define SPI_MOSI_PIN        AUX_IO1_PIN
-#define SPI_MISO_PIN        AUX_IO2_PIN
 #define SD_CS_PIN           AUX_IO3_PIN
-#elif MPG_MODE == 1
-#define MPG_MODE_PIN        AUX_IO3_PIN
 #endif
 
 #if ETHERNET_ENABLE
+  #if !SDCARD_ENABLE
+    #define SPI_CS_PIN      AUX_IO3_PIN
+    #define AUXOUTPUT7_PORT GPIO_OUTPUT
+    #define AUXOUTPUT7_PIN  AUX_IO4_PIN
+  #else
+    #define SPI_CS_PIN      AUX_IO4_PIN
+  #endif
+  #define SPI_IRQ_PIN       26
+  #define SPI_RST_PORT      GPIO_SR16
+#else
+  #define AUXOUTPUT7_PORT   GPIO_OUTPUT
+  #define AUXOUTPUT7_PIN    AUX_IO4_PIN
+#endif
+
+#if SDCARD_ENABLE || ETHERNET_ENABLE
 #define SPI_PORT            1
 #define SPI_SCK_PIN         AUX_IO0_PIN
 #define SPI_MOSI_PIN        AUX_IO1_PIN
 #define SPI_MISO_PIN        AUX_IO2_PIN
-#define SPI_CS_PIN          AUX_IO3_PIN
-#define SPI_IRQ_PIN         26
-//#define SPI_RST_PORT        GPIO_SR16
-#define SPI_RST_PIN         0 // 15
+#endif
+
+#if MPG_MODE == 1
+    #if defined(SPI_CS_PIN) && SPI_CS_PIN == AUX_IO3_PIN
+      #error "MPG mode select pin not available, is assigned as SPI CS!"
+    #else
+      #define MPG_MODE_PIN AUX_IO3_PIN
+    #endif
+#endif
+
+#if MODBUS_ENABLE & MODBUS_RTU_DIR_ENABLED
+  #if defined(SPI_CS_PIN) && SPI_CS_PIN == AUX_IO4_PIN
+    #error "Modbus direction pin not available, is assigned as ethernet CS!"
+  #else
+    #define MODBUS_DIR_AUX  7
+  #endif
 #endif
 
 #if I2C_STROBE_ENABLE
-#define I2C_STROBE_PIN      26
+  #if defined(SPI_IRQ_PIN) && SPI_IRQ_PIN == 26
+    #error "I2C strobe pin not available, is assigned as ethernet IRQ!" 
+  #else
+    #define I2C_STROBE_PIN  26
+  #endif
 #endif
