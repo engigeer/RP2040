@@ -92,9 +92,10 @@
 #define AUXOUTPUT0_PIN          12
 #define AUXOUTPUT1_PORT         GPIO_OUTPUT
 #define AUXOUTPUT1_PIN          26
-//#define AUXOUTPUT2_PORT         GPIO_OUTPUT
-//#define AUXOUTPUT2_PIN          27
-#define NEOPIXELS_PIN 27
+
+#define AUXOUTPUT0_PWM_PORT     GPIO_OUTPUT
+#define AUXOUTPUT0_PWM_PIN      27
+//#define NEOPIXELS_PIN 27
 //#define NEOPIXELS_NUM 5
 // Define user-control controls (cycle start, reset, feed hold) input pins.
 

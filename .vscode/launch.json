@@ -21,7 +21,12 @@
             "postRestartCommands": [
                 "break main",
                 "continue"
+            
             ]
         }
+        "cmake.environment": {
+            "PICO_SDK_PATH": "/home/mitchell/pico/pico-sdk"
+        }
     ]
+    
 }
