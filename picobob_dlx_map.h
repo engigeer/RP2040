@@ -82,7 +82,7 @@
 #define SPINDLE_PWM_PIN       14
 
 // Define user-control controls (cycle start, reset, feed hold) input pins.  Only Estop is supported on the Mach3 BOB.
-#ifndef I2C_STROBE_ENABLE
+#if I2C_STROBE_ENABLE
   #define RESET_PIN             3
 #else
   //reset pin is swapped to keypad when present, frees up additional input.
