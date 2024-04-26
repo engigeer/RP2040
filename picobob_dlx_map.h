@@ -20,19 +20,19 @@
 */
 
 #if TRINAMIC_ENABLE
-#error Trinamic plugin not supported!
+  #error Trinamic plugin not supported!
 #endif
 
 #if N_ABC_MOTORS > 2
-#error "Axis configuration is not supported!"
+  #error "Axis configuration is not supported!"
 #endif
 
 #define BOARD_NAME "PicoBOB Deluxe"
 #define BOARD_URL "https://github.com/Expatria-Technologies/PicoBOB_DLX"
 
 #ifdef PICO_FLASH_SIZE_BYTES
-#undef PICO_FLASH_SIZE_BYTES
-#define PICO_FLASH_SIZE_BYTES (16 * 1024 * 1024)
+  #undef PICO_FLASH_SIZE_BYTES
+  #define PICO_FLASH_SIZE_BYTES (16 * 1024 * 1024)
 #endif
 
 #define LITTLEFS_ENABLE 1
@@ -50,16 +50,16 @@
 
 // Define ganged axis or A axis step pulse and step direction output pins.
 #if N_ABC_MOTORS > 0
-#define M3_AVAILABLE
-#define M3_DIRECTION_PIN      12
-#define M3_LIMIT_PIN          5
+  #define M3_AVAILABLE
+  #define M3_DIRECTION_PIN      12
+  #define M3_LIMIT_PIN          5
 #endif
 
 //M4 pins  Note that M3 and M4 must use the same limit pin.
 #if N_ABC_MOTORS > 1
-#define M4_AVAILABLE
-#define M4_DIRECTION_PIN      13
-#define M4_LIMIT_PIN          5
+  #define M4_AVAILABLE
+  #define M4_DIRECTION_PIN      13
+  #define M4_LIMIT_PIN          5
 #endif
 
 //Define stepper driver enable/disable output pin.  This is not used on PicoBOB.
@@ -99,11 +99,11 @@
 
 // Define Aux inputs
 #define AUXINPUT0_PIN           6
-#define AUXINPUT1_PIN           15
 #if I2C_STROBE_ENABLE
 //reset pin is swapped to keypad when present, frees up additional input.
-  #define AUXINPUT2_PIN         3
+  #define AUXINPUT1_PIN         3
 #endif
+// #define AUXINPUT1_PIN           15
 
 // Define Aux Outputs
 #define AUXOUTPUT0_PORT         GPIO_OUTPUT
@@ -112,22 +112,22 @@
 //#define AUXOUTPUT1_PIN          21  // GPIO LED
 
 #if I2C_STROBE_ENABLE
-#define I2C_STROBE_PIN          27
+  #define I2C_STROBE_PIN          27
 #endif
 
 #if I2C_ENABLE
-#define I2C_PORT                0
-#define I2C_SDA                 28
-#define I2C_SCL                 29
+  #define I2C_PORT                0
+  #define I2C_SDA                 28
+  #define I2C_SCL                 29
 #endif
 
 #if ETHERNET_ENABLE
-#define SPI_PORT            0
-#define SPI_SCK_PIN         18
-#define SPI_MOSI_PIN        19
-#define SPI_MISO_PIN        16
-#define SPI_CS_PIN          17
-#define SPI_IRQ_PIN         20
-#define SPI_RST_PORT        GPIO_OUTPUT
-//#define SPI_RST_PIN         21
+  #define SPI_PORT            0
+  #define SPI_SCK_PIN         18
+  #define SPI_MOSI_PIN        19
+  #define SPI_MISO_PIN        16
+  #define SPI_CS_PIN          17
+  #define SPI_IRQ_PIN         20
+  #define SPI_RST_PORT        GPIO_OUTPUT
+  //#define SPI_RST_PIN         21
 #endif
