@@ -116,21 +116,27 @@ static uint y_step_sm;
 static uint z_step_sm;
 static PIO z_step_pio;
 #ifdef X2_STEP_PIN
+static PIO x2_step_pio;
 static uint x2_step_sm;
 #endif
 #ifdef Y2_STEP_PIN
+static PIO y2_step_pio;
 static uint y2_step_sm;
 #endif
 #ifdef Z2_STEP_PIN
+static PIO z2_step_pio;
 static uint z2_step_sm;
 #endif
 #ifdef A_STEP_PIN
+static PIO a_step_pio;
 static uint a_step_sm;
 #endif
 #ifdef B_STEP_PIN
+static PIO b_step_pio;
 static uint b_step_sm;
 #endif
 #ifdef C_STEP_PIN
+static PIO c_step_pio;
 static uint c_step_sm;
 #endif
 #endif
@@ -712,7 +718,7 @@ static void stepperEnable (axes_signals_t enable)
 // Starts stepper driver ISR timer and forces a stepper driver interrupt callback
 static void stepperWakeUp (void)
 {
-    stepperEnable((axes_signals_t){AXES_BITMASK});
+    hal.stepper.enable((axes_signals_t){AXES_BITMASK});
     stepper_timer_set_period(pio1, stepper_timer_sm, stepper_timer_sm_offset, hal.f_step_timer / 500); // ~2ms delay to allow drivers time to wake up.
     irq_set_enabled(PIO1_IRQ_0, true);
 }
@@ -750,36 +756,36 @@ inline static __attribute__((always_inline)) void stepperSetStepOutputs (axes_si
     step_pulse_generate(pio1, x_step_sm, pio_steps.value);
 #ifdef X2_STEP_PIN
     pio_steps.set = step_outbits_2.x;
-    step_pulse_generate(pio0, x2_step_sm, pio_steps.value);
+    step_pulse_generate(x2_step_pio, x2_step_sm, pio_steps.value);
 #endif
     pio_steps.set = step_outbits_1.y;
     pio_steps.reset = settings.steppers.step_invert.y;
     step_pulse_generate(pio1, y_step_sm, pio_steps.value);
 #ifdef Y2_STEP_PIN
     pio_steps.set = step_outbits_2.y;
-    step_pulse_generate(pio0, y2_step_sm, pio_steps.value);
+    step_pulse_generate(y2_step_pio, y2_step_sm, pio_steps.value);
 #endif
     pio_steps.set = step_outbits_1.z;
     pio_steps.reset = settings.steppers.step_invert.z;
     step_pulse_generate(z_step_pio, z_step_sm, pio_steps.value);
 #ifdef Z2_STEP_PIN
     pio_steps.set = step_outbits_2.z;
-    step_pulse_generate(pio0, z2_step_sm, pio_steps.value);
+    step_pulse_generate(z2_step_pio, z2_step_sm, pio_steps.value);
 #endif
 #ifdef A_STEP_PIN
     pio_steps.set = step_outbits_1.a;
     pio_steps.reset = settings.steppers.step_invert.a;
-    step_pulse_generate(pio0, a_step_sm, pio_steps.value);
+    step_pulse_generate(a_step_pio, a_step_sm, pio_steps.value);
 #endif
 #ifdef B_STEP_PIN
     pio_steps.set = step_outbits_1.b;
     pio_steps.reset = settings.steppers.step_invert.b;
-    step_pulse_generate(pio0, b_step_sm, pio_steps.value);
+    step_pulse_generate(b_step_pio, b_step_sm, pio_steps.value);
 #endif
 #ifdef C_STEP_PIN
     pio_steps.set = step_outbits_1.c;
     pio_steps.reset = settings.steppers.step_invert.c;
-    step_pulse_generate(pio0, c_step_sm, pio_steps.value);
+    step_pulse_generate(c_step_pio, c_step_sm, pio_steps.value);
 #endif
 
 #elif STEP_PORT == GPIO_PIO
@@ -856,34 +862,34 @@ inline static __attribute__((always_inline)) void stepperSetStepOutputs (axes_si
     pio_steps.reset = settings.steppers.step_invert.x;
     step_pulse_generate(pio1, x_step_sm, pio_steps.value);
 #ifdef X2_STEP_PIN
-    step_pulse_generate(pio0, x2_step_sm, pio_steps.value);
+    step_pulse_generate(x2_step_pio, x2_step_sm, pio_steps.value);
 #endif
     pio_steps.set = step_outbits.y;
     pio_steps.reset = settings.steppers.step_invert.y;
     step_pulse_generate(pio1, y_step_sm, pio_steps.value);
 #ifdef Y2_STEP_PIN
-    step_pulse_generate(pio0, y2_step_sm, pio_steps.value);
+    step_pulse_generate(y2_step_pio, y2_step_sm, pio_steps.value);
 #endif
     pio_steps.set = step_outbits.z;
     pio_steps.reset = settings.steppers.step_invert.z;
     step_pulse_generate(z_step_pio, z_step_sm, pio_steps.value);
 #ifdef Z2_STEP_PIN
-    step_pulse_generate(pio0, z2_step_sm, pio_steps.value);
+    step_pulse_generate(z2_step_pio, z2_step_sm, pio_steps.value);
 #endif
 #ifdef A_STEP_PIN
     pio_steps.set = step_outbits.a;
     pio_steps.reset = settings.steppers.step_invert.a;
-    step_pulse_generate(pio0, a_step_sm, pio_steps.value);
+    step_pulse_generate(a_step_pio, a_step_sm, pio_steps.value);
 #endif
 #ifdef B_STEP_PIN
     pio_steps.set = step_outbits.b;
     pio_steps.reset = settings.steppers.step_invert.b;
-    step_pulse_generate(pio0, b_step_sm, pio_steps.value);
+    step_pulse_generate(b_step_pio, b_step_sm, pio_steps.value);
 #endif
 #ifdef C_STEP_PIN
     pio_steps.set = step_outbits.c;
     pio_steps.reset = settings.steppers.step_invert.c;
-    step_pulse_generate(pio0, c_step_sm, pio_steps.value);
+    step_pulse_generate(c_step_pio, c_step_sm, pio_steps.value);
 #endif
 
 #elif STEP_PORT == GPIO_PIO
@@ -1205,15 +1211,15 @@ static control_signals_t __not_in_flash_func(systemGetState)(void)
 
   #ifdef SAFETY_DOOR_PIN
     if(debounce.safety_door)
-        signals.safety_door_ajar = !settings.control_invert.safety_door_ajar;
+        signals.safety_door_ajar = Off;
     else
-        signals.safety_door_ajar = DIGITAL_IN(1 << SAFETY_DOOR_PIN) ^ settings.control_invert.safety_door_ajar;
+        signals.safety_door_ajar = DIGITAL_IN(1 << SAFETY_DOOR_PIN);
   #endif
   #ifdef MOTOR_FAULT_PIN
-    signals.motor_fault = DIGITAL_IN(1 << MOTOR_FAULT_PIN) ^ settings.control_invert.motor_fault;
+    signals.motor_fault = DIGITAL_IN(1 << MOTOR_FAULT_PIN);
   #endif
   #ifdef MOTOR_WARNING_PIN
-    signals.motor_warning = DIGITAL_IN(1 << MOTOR_WARNING_PIN) ^ settings.control_invert.motor_warning;
+    signals.motor_warning = DIGITAL_IN(1 << MOTOR_WARNING_PIN);
   #endif
 
   #if AUX_CONTROLS_SCAN
@@ -2378,7 +2384,7 @@ bool driver_init (void)
     systick_hw->csr = M0PLUS_SYST_CSR_TICKINT_BITS | M0PLUS_SYST_CSR_ENABLE_BITS;
 
     hal.info = "RP2040";
-    hal.driver_version = "240314";
+    hal.driver_version = "240408";
     hal.driver_options = "SDK_" PICO_SDK_VERSION_STRING;
     hal.driver_url = GRBL_URL "/RP2040";
 #ifdef BOARD_NAME
@@ -2516,8 +2522,11 @@ bool driver_init (void)
 #endif
     hal.limits_cap = get_limits_cap();
     hal.home_cap = get_home_cap();
+#if defined(COOLANT_FLOOD_PIN) || OUT_SHIFT_REGISTER
+    hal.coolant_cap.flood = On;
+#endif
 #if defined(COOLANT_MIST_PIN) || OUT_SHIFT_REGISTER
-    hal.driver_cap.mist_control = On;
+    hal.coolant_cap.mist = On;
 #endif
     hal.driver_cap.software_debounce = On;
     hal.driver_cap.step_pulse_delay = On;
@@ -2669,22 +2678,28 @@ bool driver_init (void)
 #endif
 
 #ifdef X2_STEP_PIN
-    assign_step_sm(&z_step_pio, &x2_step_sm, X2_STEP_PIN);
+    x2_step_pio = z_step_pio;
+    assign_step_sm(&x2_step_pio, &x2_step_sm, X2_STEP_PIN);
 #endif
 #ifdef Y2_STEP_PIN
-    assign_step_sm(&z_step_pio, &y2_step_sm, Y2_STEP_PIN);
+    y2_step_pio = z_step_pio;
+    assign_step_sm(&y2_step_pio, &y2_step_sm, Y2_STEP_PIN);
 #endif
 #ifdef Z2_STEP_PIN
-    assign_step_sm(&z_step_pio, &z2_step_sm, Z2_STEP_PIN);
+    z2_step_pio = z_step_pio;
+    assign_step_sm(&z2_step_pio, &z2_step_sm, Z2_STEP_PIN);
 #endif
 #ifdef A_STEP_PIN
-    assign_step_sm(&z_step_pio, &a_step_sm, A_STEP_PIN);
+    a_step_pio = z_step_pio;
+    assign_step_sm(&a_step_pio, &a_step_sm, A_STEP_PIN);
 #endif
 #ifdef B_STEP_PIN
-    assign_step_sm(&z_step_pio, &b_step_sm, B_STEP_PIN);
+    b_step_pio = z_step_pio;
+    assign_step_sm(&b_step_pio, &b_step_sm, B_STEP_PIN);
 #endif
 #ifdef C_STEP_PIN
-    assign_step_sm(&z_step_pio, &c_step_sm, C_STEP_PIN);
+    c_step_pio = z_step_pio;
+    assign_step_sm(&c_step_pio, &c_step_sm, C_STEP_PIN);
 #endif
 
 #endif // N_ABC_MOTORS
@@ -2736,6 +2751,14 @@ bool driver_init (void)
 
         pio_offset = pio_add_program(neop_pio, &ws2812_program);
         ws2812_program_init(neop_pio, neop_sm, pio_offset, NEOPIXELS_PIN, 800000, false);
+
+        const periph_pin_t neopin = {
+            .group = PinGroup_LED,
+            .function = Output_LED_Adressable,
+            .pin = NEOPIXELS_PIN
+        };
+
+        registerPeriphPin(&neopin);
     } // else report unavailable?
 
 #elif defined(LED_G_PIN)
