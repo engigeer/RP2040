@@ -21,7 +21,7 @@
 
 // NOTE: Only one board may be enabled!
 // If none is enabled pin mappings from generic_map.h will be used.
-//#define BOARD_PICO_CNC
+#define BOARD_PICO_CNC
 //#define BOARD_PICOBOB
 //#define BOARD_PICOBOB_G540
 //#define BOARD_PICOBOB_DLX
@@ -35,9 +35,10 @@
 // Configuration
 // Uncomment to enable.
 
-#ifndef USB_SERIAL_CDC
-#define USB_SERIAL_CDC          1 // Serial communication via native USB.
-#endif
+//#ifndef USB_SERIAL_CDC
+//#define USB_SERIAL_CDC          1 // Serial communication via native USB.
+//#endif
+
 //#define BLUETOOTH_ENABLE        2 // Set to 2 for HC-05 module, enable in CMakeLists.txt if for Pico W Bluetooth.
 // Spindle selection:
 // Up to four specific spindle drivers can be instantiated at a time
@@ -45,8 +46,8 @@
 // If none are specified the default PWM spindle is instantiated.
 // Spindle definitions can be found in grbl/spindle_control.h.
 // More here https://github.com/grblHAL/Plugins_spindle
-//#define SPINDLE0_ENABLE         SPINDLE_HUANYANG1
-//#define SPINDLE1_ENABLE         SPINDLE_PWM0
+#define SPINDLE0_ENABLE         SPINDLE_STEPPER
+#define SPINDLE1_ENABLE         SPINDLE_PWM0
 //#define SPINDLE2_ENABLE         SPINDLE_NONE 
 //#define SPINDLE2_ENABLE         SPINDLE_NONE
 //#define SPINDLE_OFFSET          1 // Set to 1 to add offset move when switching between laser and spindle
