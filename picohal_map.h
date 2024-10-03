@@ -52,8 +52,8 @@
 
 // Define homing/hard limit switch input pins.  Currently configured so that X and Z limit pins are shared.
 #define LIMIT_PORT            GPIO_INPUT
-#define X_LIMIT_PIN           15
-#define Y_LIMIT_PIN           10
+#define X_LIMIT_PIN           8 //15
+#define Y_LIMIT_PIN           9 //10
 #define Z_LIMIT_PIN           5
 
 // Define driver spindle pins
@@ -63,7 +63,7 @@
 #define AUXOUTPUT0_PIN          27
 #define MODBUS_DIR_AUX  0
 
-#define SERIAL1_PORT 1
+//#define SERIAL1_PORT 1
 
 #if MODBUS_ENABLE
 #define MODBUS_SERIAL_PORT          1
@@ -80,11 +80,7 @@
 
 //Define cnc shield coolant pin as auxoutput
 #define AUXOUTPUT2_PORT         GPIO_OUTPUT
-#define AUXOUTPUT2_PIN          27
-
-//Define cnc shield coolant pin as auxoutput
-#define AUXOUTPUT3_PORT         GPIO_OUTPUT
-#define AUXOUTPUT3_PIN          7
+#define AUXOUTPUT2_PIN          7
 
 #else
 //Define 2 pin PWM port as Aux output
@@ -97,11 +93,7 @@
 
 //Define cnc shield coolant pin as auxoutput
 #define AUXOUTPUT3_PORT         GPIO_OUTPUT
-#define AUXOUTPUT3_PIN          27
-
-//Define cnc shield coolant pin as auxoutput
-#define AUXOUTPUT4_PORT         GPIO_OUTPUT
-#define AUXOUTPUT4_PIN          7
+#define AUXOUTPUT3_PIN          7
 
 #endif
 
@@ -113,7 +105,7 @@
 //define CNC shield A4/A5 pins as Auxinput, these are ADC capable (3.3V max).
 #define AUXINPUT2_PIN           28
 
-#if (PROBE_ENABLE)
+#if PROBE_ENABLE
 #define PROBE_PIN               29
 #else
 #define AUXINPUT3_PIN           29
