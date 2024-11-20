@@ -45,8 +45,13 @@
 // If none are specified the default PWM spindle is instantiated.
 // Spindle definitions can be found in grbl/spindle_control.h.
 // More here https://github.com/grblHAL/Plugins_spindle
+<<<<<<< Updated upstream
 //#define SPINDLE0_ENABLE         SPINDLE_HUANYANG1
 //#define SPINDLE1_ENABLE         SPINDLE_PWM0
+=======
+#define SPINDLE0_ENABLE         SPINDLE_STEPPER
+//#define SPINDLE1_ENABLE         SPINDLE_STEPPER
+>>>>>>> Stashed changes
 //#define SPINDLE2_ENABLE         SPINDLE_NONE 
 //#define SPINDLE2_ENABLE         SPINDLE_NONE
 //#define SPINDLE_OFFSET          1 // Set to 1 to add offset move when switching between laser and spindle
