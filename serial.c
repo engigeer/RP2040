@@ -34,8 +34,8 @@
 #define RX_BUFFER_HWM 800
 #define RX_BUFFER_LWM 300
 
-#define UART_TX_PIN 0
-#define UART_RX_PIN 1
+#define UART_TX_PIN 12
+#define UART_RX_PIN 13
 
 #ifndef UART_PORT
 #define UART_PORT uart0
