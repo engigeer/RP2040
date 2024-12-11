@@ -1,9 +1,10 @@
 /*
-  picoHAL_map.h - Board mapping for PicoHAL with classic CNC Shield (4 independent axes)
+  picoHAL_map.h - Board mapping for PicoHAL (modified for custom use)
 
   Part of grblHAL
 
   Copyright (c) 2021-2023 Andrew Marles
+  Copyright (c) 2024 Mitchell Grams
 
   Grbl is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -44,8 +45,8 @@
 // Define ganged axis or A axis step pulse and step direction output pins.
 #if N_ABC_MOTORS > 0
 #define M3_AVAILABLE
-#define M3_DIRECTION_PIN      5
-#define M3_LIMIT_PIN          19  //shared with Z
+#define M3_DIRECTION_PIN      19
+#define M3_LIMIT_PIN          5  //shared with Z
 #endif
 
 //Define stepper driver enable/disable output pin.  This is not used on PicoBOB.
@@ -54,9 +55,15 @@
 #define LIMIT_PORT            GPIO_INPUT
 #define X_LIMIT_PIN           15
 #define Y_LIMIT_PIN           10
-#define Z_LIMIT_PIN           19
+#define Z_LIMIT_PIN           5
 
 // Define driver spindle pins
+#if DRIVER_SPINDLE_ENABLE
+#ifndef SPINDLE_PORT
+#define SPINDLE_PORT          GPIO_OUTPUT
+#endif
+#define SPINDLE_ENABLE_PIN    7
+#endif
 
 //auxout0 first so that it is available for Modbus dir
 #define AUXOUTPUT0_PORT         GPIO_OUTPUT
@@ -71,34 +78,27 @@
 
 #if DRIVER_SPINDLE_PWM_ENABLE
 //Define 2 pin PWM port as PWM spindle output
-//#define SPINDLE_PWM_PORT        GPIO_OUTPUT
-//#define SPINDLE_PWM_PIN         25
+#define SPINDLE_PWM_PORT        GPIO_OUTPUT
+#define SPINDLE_PWM_PIN         25
 
 //Define 3 pin 'Neopixel" driver port as aux output
-//#define AUXOUTPUT1_PORT         GPIO_OUTPUT
-//#define AUXOUTPUT1_PIN          26
-
-//Define cnc shield coolant pin as auxoutput
 #define AUXOUTPUT1_PORT         GPIO_OUTPUT
-#define AUXOUTPUT1_PIN          7
+#define AUXOUTPUT1_PIN          26
 
 #else
 //Define 2 pin PWM port as Aux output
-//#define AUXOUTPUT1_PORT        GPIO_OUTPUT
-//#define AUXOUTPUT1_PIN         25
+#define AUXOUTPUT1_PORT         GPIO_OUTPUT
+#define AUXOUTPUT1_PIN          25
 
 //Define 3 pin 'Neopixel" driver port as aux output
-//#define AUXOUTPUT2_PORT         GPIO_OUTPUT
-//#define AUXOUTPUT2_PIN          26
-
-//Define cnc shield coolant pin as auxoutput
-#define AUXOUTPUT1_PORT         GPIO_OUTPUT
-#define AUXOUTPUT1_PIN          7
+#define AUXOUTPUT2_PORT         GPIO_OUTPUT
+#define AUXOUTPUT2_PIN          26
 
 #endif
 
 //define CNC shield HOLD pin as auxinput
 #define AUXINPUT0_PIN           6
+
 //define CNC shield RUN pin as auxinput
 #define AUXINPUT1_PIN           11
 
