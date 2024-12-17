@@ -128,3 +128,5 @@
 #define SPI_RST_PORT        GPIO_OUTPUT
 //#define SPI_RST_PIN         21
 #endif
+
+#define SD_CS_PIN           29
