@@ -114,12 +114,14 @@ target_compile_definitions(grblHAL PUBLIC PROBE_ENABLE=0)
 target_compile_definitions(grblHAL PUBLIC MODBUS_ENABLE=2)
 
 target_compile_definitions(grblHAL PUBLIC MACROS_ENABLE=1)
-target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC N_MACROS=3)
+target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=2)
 target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
-target_compile_definitions(grblHAL PUBLIC WEBUI_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC WEBUI_ENABLE=1)
 
 #target_compile_definitions(grblHAL PUBLIC SDCARD_ENABLE=1)
-#target_compile_definitions(grblHAL PUBLIC FTP_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC FTP_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC FF_FS_RPATH=1)
 #target_compile_definitions(grblHAL PUBLIC KEYPAD_ENABLE=2)
 
 if(ADD_WIFI)

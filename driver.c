@@ -70,6 +70,7 @@
 #if LITTLEFS_ENABLE
 #include "littlefs_hal.h"
 #include "sdcard/fs_littlefs.h"
+#include "sdcard/macros.h"
 #endif
 
 #if USB_SERIAL_CDC
@@ -2311,14 +2312,18 @@ static bool driver_setup (settings_t *settings)
 
 #if SDCARD_ENABLE
     sdcard_init();
+#elif LITTLEFS_ENABLE
+    fs_macros_init();
 #endif
 
 #if MPG_ENABLE == 1
     gpio_init(MPG_MODE_PIN);
 #endif
 
-#if LITTLEFS_ENABLE && WEBUI_ENABLE
-    fs_littlefs_mount("/littlefs", pico_littlefs_hal());
+#if LITTLEFS_ENABLE
+    fs_littlefs_mount("/", pico_littlefs_hal());
+// #elif LITTLEFS_ENABLE // && WEBUI_ENABLE
+//     fs_littlefs_mount("/littlefs", pico_littlefs_hal());
 #endif
 
     IOInitDone = settings->version == 22;
