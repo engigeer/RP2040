@@ -22,6 +22,7 @@
 // NOTE: Only one board may be enabled!
 // If none is enabled pin mappings from generic_map.h will be used.
 //#define BOARD_PICO_CNC
+//#define BOARD_RP23U5XBB
 //#define BOARD_PICOBOB
 //#define BOARD_PICOBOB_G540
 //#define BOARD_PICOBOB_DLX
@@ -56,9 +57,9 @@
 //#define WIFI_ENABLE             0 // Do NOT enable here, enable in CMakeLists.txt!
 //#define WIFI_SOFTAP             1 // Use Soft AP mode for WiFi. NOTE: WIP - not yet complete!
 //#define ETHERNET_ENABLE         0 // Do NOT enable here, enable in CMakeLists.txt!
-//#define _WIZCHIP_            5500 // Selects WIZnet ethernet breakout connected via SPI.
+#define _WIZCHIP_              5500 // Selects WIZnet ethernet breakout connected via SPI.
                                     // Uncomment to enable W5500 chip, default is W5100S. Requires ethernet enabled in CMakeLists.txt.
-//#define WEBUI_ENABLE            1 // Enable ESP3D-WEBUI plugin along with networking and SD card plugins. Requires WiFi enabled.
+//#define WEBUI_ENABLE            3 // Enable ESP3D-WEBUI plugin along with networking and SD card plugins. Requires WiFi enabled.
 //#define WEBUI_AUTH_ENABLE       1 // Enable ESP3D-WEBUI authentication.
 //#define WEBUI_INFLASH           1 // Store WebUI files in flash instead of on SD card.
 //#define SDCARD_ENABLE           2 // Run gcode programs from SD card. Set to 2 to enable YModem upload.
@@ -116,8 +117,6 @@
 //#define Y_GANGED_LIM_MAX     1
 //#define Z_GANGED_LIM_MAX     1
 //
-
-#define _WIZCHIP_ 5500
 
 #if WIFI_ENABLE || ETHERNET_ENABLE || WEBUI_ENABLE
 #define TELNET_ENABLE        1 // Telnet daemon - requires WiFi streaming enabled.

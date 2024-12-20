@@ -2,10 +2,6 @@ cmake_minimum_required(VERSION 3.13)
 
 %compile_options%
 
-if(ADD_WIFI OR ADD_BLUETOOTH)
-    set(PICO_BOARD pico_w)
-endif()
-
 include(pico_sdk_import.cmake)
 
 if(ADD_WIFI OR ADD_ETHERNET)
@@ -28,6 +24,7 @@ include(plugins/CMakeLists.txt)
 %include_libraries%
 
 project(grblHAL)
+
 pico_sdk_init()
 
 if(AddMyPlugin)
@@ -180,6 +177,13 @@ if(AddMyPlugin)
 endif()
 
 target_include_directories(grblHAL PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+
+if(PICO_PLATFORM STREQUAL "rp2040")
+    target_link_libraries(grblHAL PRIVATE
+        hardware_rtc
+    )
+endif()
+
 target_link_libraries(grblHAL PRIVATE
  grbl
  fatfs
@@ -199,7 +203,6 @@ target_link_libraries(grblHAL PRIVATE
  hardware_spi
  hardware_gpio
  hardware_pwm
- hardware_rtc
  hardware_clocks
  hardware_flash
 %link_libraries%
@@ -207,6 +210,8 @@ target_link_libraries(grblHAL PRIVATE
 
 pico_add_extra_outputs(grblHAL)
 
+unset(PICO_BOARD CACHE)
+unset(PICO_PLATFORM CACHE)
 unset(ADD_WIFI CACHE)
 unset(ADD_ETHERNET CACHE)
 unset(ADD_BLUETOOTH CACHE)

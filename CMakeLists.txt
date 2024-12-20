@@ -30,6 +30,8 @@ if(ADD_WIFI OR ADD_BLUETOOTH)
     set(PICO_BOARD pico_w)
 endif()
 
+#set(PICO_BOARD pimoroni_pga2350 CACHE STRING "Board type")
+
 include(pico_sdk_import.cmake)
 
 if(ADD_WIFI OR ADD_ETHERNET)
@@ -108,6 +110,11 @@ endif()
 
 pico_generate_pio_header(grblHAL ${CMAKE_CURRENT_LIST_DIR}/driverPIO.pio)
 
+if(PICO_BOARD STREQUAL "pico" OR PICO_BOARD STREQUAL "pico_w")
+target_compile_definitions(grblHAL PUBLIC RP_MCU=2040)
+else()
+target_compile_definitions(grblHAL PUBLIC RP_MCU=2350)
+endif()
 target_compile_definitions(grblHAL PUBLIC RP2040)
 target_compile_definitions(grblHAL PUBLIC NEW_FATFS)
 target_compile_definitions(grblHAL PUBLIC PROBE_ENABLE=0)
@@ -211,6 +218,15 @@ if(ADD_HPGL)
 endif()
 
 target_include_directories(grblHAL PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+if(PICO_PLATFORM STREQUAL "rp2040")
+target_compile_definitions(grblHAL PUBLIC RP_MCU=2040)
+target_link_libraries(grblHAL PRIVATE
+ hardware_rtc
+)
+else()
+target_compile_definitions(grblHAL PUBLIC RP_MCU=2350)
+endif()
+
 target_link_libraries(grblHAL PRIVATE
  grbl
  fatfs
@@ -235,13 +251,13 @@ target_link_libraries(grblHAL PRIVATE
  hardware_spi
  hardware_gpio
  hardware_pwm
- hardware_rtc
  hardware_clocks
  hardware_flash
 )
 
 pico_add_extra_outputs(grblHAL)
 
+unset(PICO_BOARD CACHE)
 unset(ADD_WIFI CACHE)
 unset(ADD_ETHERNET CACHE)
 unset(ADD_BLUETOOTH CACHE)
