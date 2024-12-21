@@ -42,6 +42,10 @@
 #define Y_DIRECTION_PIN       17
 #define Z_DIRECTION_PIN       18
 
+// Define stepper driver enable/disable output pin.
+#define ENABLE_PORT           GPIO_OUTPUT
+#define STEPPERS_ENABLE_PIN   24
+
 // Define ganged axis or A axis step pulse and step direction output pins.
 #if N_ABC_MOTORS > 0
 #define M3_AVAILABLE
@@ -57,17 +61,32 @@
 #define Y_LIMIT_PIN           10
 #define Z_LIMIT_PIN           5
 
-// Define driver spindle pins
+// Define Aux Outputs
+#define AUXOUTPUT0_PORT         GPIO_OUTPUT // MODBUS DIRECTION
+#define AUXOUTPUT0_PIN          27
+#define AUXOUTPUT1_PORT         GPIO_OUTPUT // Spindle enable
+#define AUXOUTPUT1_PIN          7
+#define AUXOUTPUT2_PORT         GPIO_OUTPUT // Spindle PWM (2 pin PWM port)
+#define AUXOUTPUT2_PIN          25
+#define AUXOUTPUT3_PORT         GPIO_OUTPUT // Spindle Direction (3 pin 'Neopixel" driver)
+#define AUXOUTPUT3_PIN          26
+#define AUXOUTPUT4_PORT         GPIO_OUTPUT // Stepper enable
+#define AUXOUTPUT4_PIN          24
+
 #if DRIVER_SPINDLE_ENABLE
-#ifndef SPINDLE_PORT
-#define SPINDLE_PORT          GPIO_OUTPUT
+#define SPINDLE_PORT            GPIO_OUTPUT
 #endif
-#define SPINDLE_ENABLE_PIN    7
+#if DRIVER_SPINDLE_ENABLE & SPINDLE_ENA
+#define SPINDLE_ENABLE_PIN      AUXOUTPUT1_PIN
+#endif
+#if DRIVER_SPINDLE_ENABLE & SPINDLE_PWM
+#define SPINDLE_PWM_PIN         AUXOUTPUT2_PIN
+#endif
+#if DRIVER_SPINDLE_ENABLE & SPINDLE_DIR
+#define SPINDLE_DIRECTION_PIN   AUXOUTPUT3_PIN
 #endif
 
-//auxout0 first so that it is available for Modbus dir
-#define AUXOUTPUT0_PORT         GPIO_OUTPUT
-#define AUXOUTPUT0_PIN          27
+//Modbus 
 #define MODBUS_DIR_AUX  0
 
 #define SERIAL1_PORT 1
@@ -76,47 +95,18 @@
 #define MODBUS_SERIAL_PORT          1
 #endif
 
-#if DRIVER_SPINDLE_PWM_ENABLE
-//Define 2 pin PWM port as PWM spindle output
-#define SPINDLE_PWM_PORT        GPIO_OUTPUT
-#define SPINDLE_PWM_PIN         25
+//
 
-//Define 3 pin 'Neopixel" driver port as aux output
-#define AUXOUTPUT1_PORT         GPIO_OUTPUT
-#define AUXOUTPUT1_PIN          26
+#define AUXINPUT0_PIN           6  // CNC shield HOLD pin
+#define AUXINPUT1_PIN           11 // CNC shield RUN pin
+#define AUXINPUT2_PIN           28 // CNC shield A4 (ADC capable, 3.3V max)
+#define AUXINPUT3_PIN           29 // CNC shield A5 (ADC capable, 3.3V max)
 
-#else
-//Define 2 pin PWM port as Aux output
-#define AUXOUTPUT1_PORT         GPIO_OUTPUT
-#define AUXOUTPUT1_PIN          25
-
-//Define 3 pin 'Neopixel" driver port as aux output
-#define AUXOUTPUT2_PORT         GPIO_OUTPUT
-#define AUXOUTPUT2_PIN          26
-
-#endif
-
-//define CNC shield HOLD pin as auxinput
-#define AUXINPUT0_PIN           6
-
-//define CNC shield RUN pin as auxinput
-#define AUXINPUT1_PIN           11
-
-//define CNC shield A4/A5 pins as Auxinput, these are ADC capable (3.3V max).
-#define AUXINPUT2_PIN           28
 
 #if PROBE_ENABLE
-#define PROBE_PIN               29
-#else
-#define AUXINPUT3_PIN           29
+#define PROBE_PIN               AUXINPUT3_PIN
 #endif
 
-// Define Reset/HALT pin
-#define RESET_PIN               14
-
-// Define stepper driver enable/disable output pin.
-#define ENABLE_PORT               GPIO_OUTPUT
-#define STEPPERS_ENABLE_PIN       24
 
 #if ETHERNET_ENABLE
 #define SPI_PORT            0
@@ -126,7 +116,4 @@
 #define SPI_CS_PIN          1
 #define SPI_IRQ_PIN         4
 #define SPI_RST_PORT        GPIO_OUTPUT
-//#define SPI_RST_PIN         21
 #endif
-
-#define SD_CS_PIN           29
