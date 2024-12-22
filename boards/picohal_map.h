@@ -53,15 +53,13 @@
 #define M3_LIMIT_PIN          5  //shared with Z
 #endif
 
-//Define stepper driver enable/disable output pin.  This is not used on PicoBOB.
-
 // Define homing/hard limit switch input pins.  Currently configured so that X and Z limit pins are shared.
 #define LIMIT_PORT            GPIO_INPUT
 #define X_LIMIT_PIN           15
 #define Y_LIMIT_PIN           10
 #define Z_LIMIT_PIN           5
 
-// Define Aux Outputs
+// Aux Outputs
 #define AUXOUTPUT0_PORT         GPIO_OUTPUT // MODBUS DIRECTION
 #define AUXOUTPUT0_PIN          27
 #define AUXOUTPUT1_PORT         GPIO_OUTPUT // Spindle enable
@@ -86,7 +84,17 @@
 #define SPINDLE_DIRECTION_PIN   AUXOUTPUT3_PIN
 #endif
 
-//Modbus 
+// Aux Inputs
+#define AUXINPUT0_PIN           6  // CNC shield HOLD pin
+#define AUXINPUT1_PIN           11 // CNC shield RUN pin
+#define AUXINPUT2_PIN           28 // CNC shield A4 (ADC capable, 3.3V max)
+#define AUXINPUT3_PIN           29 // CNC shield A5 (ADC capable, 3.3V max)
+
+#if PROBE_ENABLE
+#define PROBE_PIN               AUXINPUT3_PIN
+#endif
+
+// Modbus 
 #define MODBUS_DIR_AUX  0
 
 #define SERIAL1_PORT 1
@@ -95,19 +103,22 @@
 #define MODBUS_SERIAL_PORT          1
 #endif
 
-//
+// UART 0
+#define UART_TX_PIN 12
+#define UART_RX_PIN 13
 
-#define AUXINPUT0_PIN           6  // CNC shield HOLD pin
-#define AUXINPUT1_PIN           11 // CNC shield RUN pin
-#define AUXINPUT2_PIN           28 // CNC shield A4 (ADC capable, 3.3V max)
-#define AUXINPUT3_PIN           29 // CNC shield A5 (ADC capable, 3.3V max)
+// UART 1 (Modbus)
+#define UART_1_TX_PIN 8
+#define UART_1_RX_PIN 9
 
+#define MODBUS_DIR_AUX  0
+#define SERIAL1_PORT 1
 
-#if PROBE_ENABLE
-#define PROBE_PIN               AUXINPUT3_PIN
+#if MODBUS_ENABLE
+#define MODBUS_SERIAL_PORT          1
 #endif
 
-
+// Ethernet
 #if ETHERNET_ENABLE
 #define SPI_PORT            0
 #define SPI_SCK_PIN         2
