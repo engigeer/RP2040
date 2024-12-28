@@ -40,3 +40,6 @@
 [submodule "plugins"]
 	path = plugins
 	url = https://github.com/grblHAL/Plugins_misc/
+[submodule "picohal"]
+	path = picohal
+	url = https://github.com/Expatria-Technologies/Plugins_picohal
