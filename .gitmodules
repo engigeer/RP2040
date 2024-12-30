@@ -42,4 +42,4 @@
 	url = https://github.com/grblHAL/Plugins_misc/
 [submodule "picohal"]
 	path = picohal
-	url = https://github.com/Expatria-Technologies/Plugins_picohal
+	url = https://github.com/engigeer/Plugins_picohal
