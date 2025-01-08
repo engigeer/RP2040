@@ -38,7 +38,7 @@
 // Uncomment to enable.
 
 #ifndef USB_SERIAL_CDC
-#define USB_SERIAL_CDC         1 // Serial communication via native USB.
+#define USB_SERIAL_CDC         0 // Serial communication via native USB.
 #endif
 //#define BLUETOOTH_ENABLE        2 // Set to 2 for HC-05 module, enable in CMakeLists.txt if for Pico W Bluetooth.
 // Spindle selection:
@@ -47,7 +47,7 @@
 // If none are specified the default PWM spindle is instantiated.
 // Spindle definitions can be found in grbl/spindle_control.h.
 // More here https://github.com/grblHAL/Plugins_spindle
-#define SPINDLE0_ENABLE         SPINDLE_PICOHAL
+//#define SPINDLE0_ENABLE         SPINDLE_PICOHAL
 //#define SPINDLE1_ENABLE         SPINDLE_PWM0
 //#define SPINDLE2_ENABLE         SPINDLE_NONE 
 //#define SPINDLE2_ENABLE         SPINDLE_NONE

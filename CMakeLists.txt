@@ -126,9 +126,12 @@ target_compile_definitions(grblHAL PUBLIC N_MACROS=3)
 target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=2)
 target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
 
+target_compile_definitions(grblHAL PUBLIC ENABLE_JERK_ACCELERATION=1)
+target_compile_definitions(grblHAL PUBLIC ENABLE_ACCELERATION_PROFILES=1)
+
 target_compile_definitions(grblHAL PUBLIC FTP_ENABLE=1)
 #target_compile_definitions(grblHAL PUBLIC KEYPAD_ENABLE=2)
-target_compile_definitions(grblHAL PUBLIC PICOHAL_MODBUS_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC PICOHAL_MODBUS_ENABLE=1)
 
 if(ADD_WIFI)
     target_compile_definitions(grblHAL PUBLIC WIFI_ENABLE=1)
