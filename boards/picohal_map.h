@@ -96,7 +96,6 @@
 
 // Modbus 
 #define MODBUS_DIR_AUX  0
-
 #define SERIAL1_PORT 1
 
 #if MODBUS_ENABLE
@@ -110,13 +109,6 @@
 // UART 1 (Modbus)
 #define UART_1_TX_PIN 8
 #define UART_1_RX_PIN 9
-
-#define MODBUS_DIR_AUX  0
-#define SERIAL1_PORT 1
-
-#if MODBUS_ENABLE
-#define MODBUS_SERIAL_PORT          1
-#endif
 
 // Ethernet
 #if ETHERNET_ENABLE
