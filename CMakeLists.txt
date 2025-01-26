@@ -126,8 +126,8 @@ target_compile_definitions(grblHAL PUBLIC MODBUS_ENABLE=2)
 target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=2)
 target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
 
-#target_compile_definitions(grblHAL PUBLIC ENABLE_JERK_ACCELERATION=1)
-#target_compile_definitions(grblHAL PUBLIC ENABLE_ACCELERATION_PROFILES=1)
+target_compile_definitions(grblHAL PUBLIC ENABLE_JERK_ACCELERATION=1)
+target_compile_definitions(grblHAL PUBLIC ENABLE_ACCELERATION_PROFILES=1)
 #target_compile_definitions(grblHAL PUBLIC DEBUG=1)
 #target_compile_definitions(grblHAL PUBLIC DEBUGOUT=1)
 
