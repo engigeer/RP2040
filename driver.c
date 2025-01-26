@@ -2947,7 +2947,7 @@ bool driver_init (void)
 
 #if USB_SERIAL_CDC
 
-    // register $DFU bootloader command
+    // register $UF2 bootloader command
 
     grbl.on_report_options = onReportOptions;
 
