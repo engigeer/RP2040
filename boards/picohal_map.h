@@ -102,9 +102,18 @@
 #define MODBUS_SERIAL_PORT          1
 #endif
 
-// UART 0
-#define UART_TX_PIN 12
-#define UART_RX_PIN 13
+// i2C or UART 0 (DEBUG KEYPAD TEST)
+#if I2C_ENABLE
+  #define I2C_PORT              0
+  #define I2C_SDA               12
+  #define I2C_SCL               13
+#else
+  #define UART_TX_PIN 12
+  #define UART_RX_PIN 13
+#endif
+
+#define I2C_STROBE_PIN        23
+#define RESET_PIN             19
 
 // UART 1 (Modbus)
 #define UART_1_TX_PIN 8

@@ -27,7 +27,7 @@
 //#define BOARD_PICOBOB_G540
 //#define BOARD_PICOBOB_DLX
 //#define BOARD_PICOBOB_DLX_G540
-//#define BOARD_PICOHAL
+#define BOARD_PICOHAL
 //#define BOARD_BTT_SKR_PICO_10 // incomplete and untested!
 //#define BOARD_CNC_BOOSTERPACK
 //#define BOARD_CITOH_CX6000    // C.ITOH CX-6000 HPGL plotter
@@ -53,11 +53,11 @@
 //#define SPINDLE2_ENABLE         SPINDLE_NONE
 //#define SPINDLE_OFFSET          1 // Set to 1 to add offset move when switching between laser and spindle
 // **********************
-//#define MODBUS_ENABLE           1 // Set to 1 for auto direction, 2 for direction signal on auxiliary output pin.
+#define MODBUS_ENABLE           2 // Set to 1 for auto direction, 2 for direction signal on auxiliary output pin.
 //#define WIFI_ENABLE             0 // Do NOT enable here, enable in CMakeLists.txt!
 //#define WIFI_SOFTAP             1 // Use Soft AP mode for WiFi. NOTE: WIP - not yet complete!
-//#define ETHERNET_ENABLE         0 // Do NOT enable here, enable in CMakeLists.txt!
-//#define _WIZCHIP_            5500 // Selects WIZnet ethernet breakout connected via SPI.
+//#define ETHERNET_ENABLE         1 // Do NOT enable here, enable in CMakeLists.txt!
+#define _WIZCHIP_            5500 // Selects WIZnet ethernet breakout connected via SPI.
                                     // Uncomment to enable W5500 chip, default is W5100S. Requires ethernet enabled in CMakeLists.txt.
 //#define WEBUI_ENABLE            3 // Enable ESP3D-WEBUI plugin along with networking and SD card plugins. Requires WiFi enabled.
 //#define WEBUI_AUTH_ENABLE       1 // Enable ESP3D-WEBUI authentication.
@@ -66,9 +66,9 @@
 //#define MPG_ENABLE              1 // Enable MPG interface. Requires a serial stream and means to switch between normal and MPG mode.
                                     // 1: Mode switching is by handshake pin.
                                     // 2: Mode switching is by the CMD_MPG_MODE_TOGGLE (0x8B) command character.
-//#define KEYPAD_ENABLE           1 // 1: uses a I2C keypad for input.
+#define KEYPAD_ENABLE           1 // 1: uses a I2C keypad for input.
                                     // 2: uses a serial stream for input. If MPG_ENABLE is set > 0 the serial stream is shared with the MPG.
-//#define DISPLAY_ENABLE          1 // Set to 1 for I2C display protocol, 2 for I2C LED protocol.
+#define DISPLAY_ENABLE          9 // Set to 1 for I2C display protocol, 2 for I2C LED protocol.
 //#define ODOMETER_ENABLE         1 // Odometer plugin.
 //#define LASER_COOLANT_ENABLE    1 // Laser coolant plugin. To be completed.
 //#define LB_CLUSTERS_ENABLE      1 // LaserBurn cluster support.
@@ -130,7 +130,7 @@
 #endif
 // The following symbols have the default values as shown, uncomment and change as needed.
 //#define NETWORK_STA_HOSTNAME    "grblHAL"
-//#define NETWORK_STA_IPMODE      1 // 0 = static, 1 = DHCP, 2 = AutoIP
+#define NETWORK_STA_IPMODE      1 // 0 = static, 1 = DHCP, 2 = AutoIP
 //#define NETWORK_STA_IP          "192.168.5.1"
 //#define NETWORK_STA_GATEWAY     "192.168.5.1"
 //#define NETWORK_STA_MASK        "255.255.255.0"

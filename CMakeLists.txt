@@ -17,7 +17,7 @@ cmake_minimum_required(VERSION 3.13)
 option(ADD_HPGL "Add HPGL plugin" OFF)
  # Note: WiFi and Ethernet cannot be enabled at the same time!
 option(ADD_WIFI "Add WiFi networking" OFF)
-option(ADD_ETHERNET "Add Ethernet networking" OFF)
+option(ADD_ETHERNET "Add Ethernet networking" ON)
 option(ADD_BLUETOOTH "Add Bluetooth" OFF)
 # Set LWIP_DIR below to the root path of lwIP sources when the following is set ON!
 option(ADD_mDNS "Add mDNS service" OFF) 
@@ -116,7 +116,10 @@ target_compile_definitions(grblHAL PUBLIC RP_MCU=2350)
 endif()
 target_compile_definitions(grblHAL PUBLIC RP2040)
 target_compile_definitions(grblHAL PUBLIC NEW_FATFS)
-#target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC ESTOP_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC I2C_STROBE_ENABLE=1)
+
 
 if(ADD_WIFI)
     target_compile_definitions(grblHAL PUBLIC WIFI_ENABLE=1)
