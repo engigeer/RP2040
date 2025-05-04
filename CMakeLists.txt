@@ -17,7 +17,7 @@ cmake_minimum_required(VERSION 3.13)
 option(ADD_HPGL "Add HPGL plugin" OFF)
  # Note: WiFi and Ethernet cannot be enabled at the same time!
 option(ADD_WIFI "Add WiFi networking" OFF)
-option(ADD_ETHERNET "Add Ethernet networking" OFF)
+option(ADD_ETHERNET "Add Ethernet networking" ON)
 option(ADD_BLUETOOTH "Add Bluetooth" OFF)
 # Set LWIP_DIR below to the root path of lwIP sources when the following is set ON!
 option(ADD_mDNS "Add mDNS service" OFF) 
@@ -53,6 +53,7 @@ include(embroidery/CMakeLists.txt)
 include(plasma/CMakeLists.txt)
 include(laser/CMakeLists.txt)
 include(plugins/CMakeLists.txt)
+include(picohal/CMakeLists.txt)
 if(ADD_HPGL)
     include(hpgl/CMakeLists.txt)
 endif()
@@ -115,7 +116,21 @@ target_compile_definitions(grblHAL PUBLIC RP_MCU=2350)
 endif()
 target_compile_definitions(grblHAL PUBLIC RP2040)
 target_compile_definitions(grblHAL PUBLIC NEW_FATFS)
-#target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=1)
+
+# SELECT PICOHAL BOARD + ENABLE NETWORKING
+target_compile_definitions(grblHAL PUBLIC BOARD_PICOHAL)
+target_compile_definitions(grblHAL PUBLIC _WIZCHIP_=5500)
+
+# ADD CUSTOMIZATIONS FOR PICOHAL CONFIG
+target_compile_definitions(grblHAL PUBLIC PROBE_ENABLE=0)
+target_compile_definitions(grblHAL PUBLIC MODBUS_ENABLE=2)
+target_compile_definitions(grblHAL PUBLIC PICOHAL_IO_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC I2C_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC I2C_STROBE_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC KEYPAD_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=2)
+target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC FTP_ENABLE=1)
 
 if(ADD_WIFI)
     target_compile_definitions(grblHAL PUBLIC WIFI_ENABLE=1)
@@ -229,6 +244,7 @@ target_link_libraries(grblHAL PRIVATE
  bluetooth
  eeprom
  plasma
+ picohal
  misc_plugins
  embroidery
  tinyusb_device_unmarked

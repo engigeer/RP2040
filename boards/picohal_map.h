@@ -31,6 +31,12 @@
 #define BOARD_NAME "PicoHAL"
 #define BOARD_URL "https://github.com/Expatria-Technologies/PicoHAL"
 
+#define USE_EXPANDERS
+// // Define flood and mist coolant enable output pins.
+#define COOLANT_PORT                EXPANDER_PORT
+#define COOLANT_FLOOD_PIN           0
+#define COOLANT_MIST_PIN            1
+
 // Define step pulse output pins.
 #define STEP_PORT             GPIO_PIO  // N_AXIS pin PIO SM
 #define STEP_PINS_BASE        16        // N_AXIS number of consecutive pins are used by PIO
@@ -103,8 +109,19 @@
 #endif
 
 // UART 0
-#define UART_TX_PIN 12
-#define UART_RX_PIN 13
+//#define UART_TX_PIN 12
+//#define UART_RX_PIN 13
+#if I2C_ENABLE
+  #define I2C_PORT              0
+  #define I2C_SDA               12
+  #define I2C_SCL               13
+#else
+  #define UART_TX_PIN 12
+  #define UART_RX_PIN 13
+#endif
+
+#define I2C_STROBE_PIN        AUXINPUT0_PIN
+#define RESET_PIN             19
 
 // UART 1 (Modbus)
 #define UART_1_TX_PIN 8
