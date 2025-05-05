@@ -131,6 +131,8 @@ target_compile_definitions(grblHAL PUBLIC PICOHAL_IO_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=2)
 target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC FTP_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC SPINDLE0_ENABLE=30)
+
 
 if(ADD_WIFI)
     target_compile_definitions(grblHAL PUBLIC WIFI_ENABLE=1)
