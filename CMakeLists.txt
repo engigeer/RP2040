@@ -123,15 +123,16 @@ target_compile_definitions(grblHAL PUBLIC _WIZCHIP_=5500)
 
 # ADD CUSTOMIZATIONS FOR PICOHAL CONFIG
 target_compile_definitions(grblHAL PUBLIC PROBE_ENABLE=0)
-target_compile_definitions(grblHAL PUBLIC MODBUS_ENABLE=2)
-target_compile_definitions(grblHAL PUBLIC PICOHAL_IO_ENABLE=1)
+# target_compile_definitions(grblHAL PUBLIC MODBUS_ENABLE=2)
+# target_compile_definitions(grblHAL PUBLIC PICOHAL_IO_ENABLE=1)
 #target_compile_definitions(grblHAL PUBLIC I2C_ENABLE=1)
 #target_compile_definitions(grblHAL PUBLIC I2C_STROBE_ENABLE=1)
 #target_compile_definitions(grblHAL PUBLIC KEYPAD_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=2)
 target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC FTP_ENABLE=1)
-target_compile_definitions(grblHAL PUBLIC SPINDLE0_ENABLE=30)
+target_compile_definitions(grblHAL PUBLIC SPINDLE0_ENABLE=19)
+target_compile_definitions(grblHAL PUBLIC N_AXIS=4)
 
 
 if(ADD_WIFI)
