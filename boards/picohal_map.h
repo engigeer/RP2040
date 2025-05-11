@@ -51,10 +51,10 @@
 
 // Define homing/hard limit switch input pins.  Currently configured so that X and Z limit pins are shared.
 #define LIMIT_PORT            GPIO_INPUT
-#define X_LIMIT_PIN           15
-#define Y_LIMIT_PIN           10
-#define Z_LIMIT_PIN           5
-#define M3_LIMIT_PIN          5
+#define X_LIMIT_PIN           7
+#define Y_LIMIT_PIN           7
+#define Z_LIMIT_PIN           7
+#define M3_LIMIT_PIN          7
 
 // Aux Outputs
 #define AUXOUTPUT0_PORT         GPIO_OUTPUT // MODBUS DIRECTION
