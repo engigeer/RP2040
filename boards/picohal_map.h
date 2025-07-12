@@ -97,6 +97,10 @@
 #define PROBE_PIN               AUXINPUT3_PIN
 #endif
 
+#if I2C_STROBE_ENABLE
+#define I2C_STROBE_PIN          AUXINPUT0_PIN   
+#endif
+
 // Modbus 
 #define MODBUS_DIR_AUX  0
 #define SERIAL1_PORT 1
@@ -105,9 +109,15 @@
 #define MODBUS_SERIAL_PORT      1
 #endif
 
-// UART 0
-#define UART_TX_PIN 12
-#define UART_RX_PIN 13
+// UART 0 (or I2C)
+#if I2C_ENABLE
+  #define I2C_PORT              0
+  #define I2C_SDA               12
+  #define I2C_SCL               13
+#else
+  #define UART_TX_PIN 12
+  #define UART_RX_PIN 13
+#endif
 
 // UART 1 (Modbus)
 #define UART_1_TX_PIN 8
