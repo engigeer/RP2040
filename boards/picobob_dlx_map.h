@@ -35,7 +35,7 @@
 #define PICO_FLASH_SIZE_BYTES (16 * 1024 * 1024)
 #endif
 
-#define LITTLEFS_ENABLE 1
+//#define LITTLEFS_ENABLE 1
 
 // Define step pulse output pins.
 #define STEP_PORT             GPIO_PIO  // N_AXIS pin PIO SM
@@ -116,12 +116,12 @@
 #define AUXINPUT2_PIN         27 // I2C strobe
 #define AUXINPUT3_PIN         4  // Probe
 #ifndef I2C_STROBE_ENABLE
-  #define AUXINPUT1_PIN       3
-  #define AUXINPUT4_PIN       15 // Reset
+  #define AUXINPUT1_PIN       15
+  #define AUXINPUT4_PIN       3 // Reset
 #else
   //reset pin is swapped to keypad when present, frees up additional input.
-  #define AUXINPUT1_PIN       15
-  #define AUXINPUT4_PIN       3  // Reset
+  #define AUXINPUT1_PIN       3
+  #define AUXINPUT4_PIN       15  // Reset
 #endif
 
 #if CONTROL_ENABLE & CONTROL_HALT
