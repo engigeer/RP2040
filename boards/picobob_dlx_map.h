@@ -35,7 +35,7 @@
 #define PICO_FLASH_SIZE_BYTES (16 * 1024 * 1024)
 #endif
 
-#define LITTLEFS_ENABLE 1
+//#define LITTLEFS_ENABLE 1
 
 // Define step pulse output pins.
 #define STEP_PORT             GPIO_PIO  // N_AXIS pin PIO SM
