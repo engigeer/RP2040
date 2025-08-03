@@ -17,7 +17,7 @@ cmake_minimum_required(VERSION 3.13)
 option(ADD_HPGL "Add HPGL plugin" OFF)
  # Note: WiFi and Ethernet cannot be enabled at the same time!
 option(ADD_WIFI "Add WiFi networking" OFF)
-option(ADD_ETHERNET "Add Ethernet networking" OFF)
+option(ADD_ETHERNET "Add Ethernet networking" ON)
 option(ADD_BLUETOOTH "Add Bluetooth" OFF)
 # Set LWIP_DIR below to the root path of lwIP sources when the following is set ON!
 option(ADD_mDNS "Add mDNS service" OFF) 
@@ -117,7 +117,29 @@ target_compile_definitions(grblHAL PUBLIC RP_MCU=2350)
 endif()
 target_compile_definitions(grblHAL PUBLIC RP2040)
 target_compile_definitions(grblHAL PUBLIC NEW_FATFS)
-#target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=1)
+
+# SELECT PICOHAL BOARD + ENABLE NETWORKING
+target_compile_definitions(grblHAL PUBLIC BOARD_PICOHAL)
+target_compile_definitions(grblHAL PUBLIC _WIZCHIP_=5500)
+
+# ADD CUSTOMIZATIONS FOR PICOHAL CONFIG
+target_compile_definitions(grblHAL PUBLIC PROBE_ENABLE=0)
+# target_compile_definitions(grblHAL PUBLIC MODBUS_ENABLE=2)
+# target_compile_definitions(grblHAL PUBLIC PICOHAL_IO_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC I2C_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC I2C_STROBE_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC KEYPAD_ENABLE=1)
+# target_compile_definitions(grblHAL PUBLIC MACROS_ENABLE=1)
+# target_compile_definitions(grblHAL PUBLIC N_MACROS=2)
+
+target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=2)
+target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC FTP_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC N_SPINDLE=2)
+target_compile_definitions(grblHAL PUBLIC N_SYS_SPINDLE=2)
+target_compile_definitions(grblHAL PUBLIC SPINDLE0_ENABLE=11)
+target_compile_definitions(grblHAL PUBLIC SPINDLE1_ENABLE=19)
+target_compile_definitions(grblHAL PUBLIC N_AXIS=4)
 
 if(ADD_WIFI)
     target_compile_definitions(grblHAL PUBLIC WIFI_ENABLE=1)
