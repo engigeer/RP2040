@@ -43,3 +43,6 @@
 [submodule "plasma"]
 	path = plasma
 	url = https://github.com/grblHAL/Plugin_plasma/
+[submodule "picohal"]
+	path = picohal
+	url = https://github.com/engigeer/Plugin_picohal
