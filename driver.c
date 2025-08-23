@@ -3073,6 +3073,7 @@ bool driver_init (void)
 #endif
 #if STEP_INJECT_ENABLE
     hal.stepper.output_step = stepperOutputStep;
+    hal.stepper.claim_motor = stepperClaimMotor;
 #endif
 
     hal.limits.enable = limitsEnable;

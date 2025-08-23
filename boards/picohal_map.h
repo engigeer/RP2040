@@ -88,8 +88,8 @@
 #endif
 
 // Aux Inputs
-// #define AUXINPUT0_PIN           14  
-// #define AUXINPUT1_PIN           6 
+#define AUXINPUT0_PIN           14  
+#define AUXINPUT1_PIN           6 
 
 // Modbus 
 // #define MODBUS_DIR_AUX          0
