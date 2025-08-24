@@ -56,8 +56,8 @@
 // Define homing/hard limit switch input pins.  Currently configured so that X and Z limit pins are shared.
 #define LIMIT_PORT            GPIO_INPUT
 #define X_LIMIT_PIN           15
-#define Y_LIMIT_PIN           10
-#define Z_LIMIT_PIN           5
+#define Y_LIMIT_PIN           15
+#define Z_LIMIT_PIN           15
 
 // Aux Outputs
 #define AUXOUTPUT0_PORT         GPIO_OUTPUT // MODBUS DIRECTION
@@ -89,16 +89,19 @@
 #define AUXINPUT1_PIN           11 // CNC shield RUN pin
 #define AUXINPUT2_PIN           28 // CNC shield A4 (ADC capable, 3.3V max)
 #define AUXINPUT3_PIN           29 // CNC shield A5 (ADC capable, 3.3V max)
-
-#undef CONTROL_ENABLE
-#define CONTROL_ENABLE 0
+#define AUXINPUT4_PIN           5  // 
+#define AUXINPUT5_PIN           10 // 
 
 #if PROBE_ENABLE
 #define PROBE_PIN               AUXINPUT3_PIN
 #endif
 
 #if I2C_STROBE_ENABLE
-#define I2C_STROBE_PIN          AUXINPUT0_PIN   
+#define I2C_STROBE_PIN          AUXINPUT4_PIN   
+#endif
+
+#if CONTROL_ENABLE & CONTROL_HALT
+#define RESET_PIN               AUXINPUT5_PIN
 #endif
 
 // Modbus 
