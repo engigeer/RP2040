@@ -125,8 +125,8 @@ target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=2)
 target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC FTP_ENABLE=1)
 
-target_compile_definitions(grblHAL PUBLIC I2C_ENABLE=1)
-target_compile_definitions(grblHAL PUBLIC I2C_STROBE_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC I2C_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC I2C_STROBE_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC KEYPAD_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC DISPLAY_ENABLE=9)
 
