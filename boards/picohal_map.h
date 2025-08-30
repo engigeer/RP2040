@@ -63,11 +63,11 @@
 #define AUXOUTPUT0_PORT         GPIO_OUTPUT // MODBUS DIRECTION
 #define AUXOUTPUT0_PIN          27
 #define AUXOUTPUT1_PORT         GPIO_OUTPUT // Spindle enable
-#define AUXOUTPUT1_PIN          7
+#define AUXOUTPUT1_PIN          26
 #define AUXOUTPUT2_PORT         GPIO_OUTPUT // Spindle PWM (2 pin PWM port)
 #define AUXOUTPUT2_PIN          25
 #define AUXOUTPUT3_PORT         GPIO_OUTPUT // Spindle Direction (3 pin 'Neopixel" driver)
-#define AUXOUTPUT3_PIN          26
+#define AUXOUTPUT3_PIN          7
 #define AUXOUTPUT4_PORT         GPIO_OUTPUT // Stepper enable
 #define AUXOUTPUT4_PIN          24
 
