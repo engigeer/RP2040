@@ -117,6 +117,20 @@ target_compile_definitions(grblHAL PUBLIC RP2040)
 target_compile_definitions(grblHAL PUBLIC NEW_FATFS)
 #target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=1)
 
+# SELECT PICOHAL BOARD + ENABLE NETWORKING
+target_compile_definitions(grblHAL PUBLIC BOARD_PICOHAL)
+target_compile_definitions(grblHAL PUBLIC _WIZCHIP_=5500)
+
+# ADD CUSTOMIZATIONS FOR PICOHAL CONFIG
+target_compile_definitions(grblHAL PUBLIC PROBE_ENABLE=0)
+# target_compile_definitions(grblHAL PUBLIC MODBUS_ENABLE=2)
+# target_compile_definitions(grblHAL PUBLIC MACROS_ENABLE=1)
+# target_compile_definitions(grblHAL PUBLIC N_MACROS=2)
+target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=2)
+target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC FTP_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC N_AXIS=3)
+
 if(ADD_WIFI)
     target_compile_definitions(grblHAL PUBLIC WIFI_ENABLE=1)
     target_compile_definitions(grblHAL PUBLIC NDEBUG)

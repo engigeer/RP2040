@@ -24,7 +24,7 @@
 #error Trinamic plugin not supported!
 #endif
 
-#if N_ABC_MOTORS > 1
+#if N_ABC_MOTORS > 0
 #error "Axis configuration is not supported!"
 #endif
 
@@ -47,11 +47,11 @@
 #define STEPPERS_ENABLE_PIN   24
 
 // Define ganged axis or A axis step pulse and step direction output pins.
-#if N_ABC_MOTORS > 0
-#define M3_AVAILABLE
-#define M3_DIRECTION_PIN      23
-#define M3_LIMIT_PIN          5  //shared with Z
-#endif
+// #if N_ABC_MOTORS > 0
+// #define M3_AVAILABLE
+// #define M3_DIRECTION_PIN      23
+// #define M3_LIMIT_PIN          5  //shared with Z
+// #endif
 
 // Define homing/hard limit switch input pins.  Currently configured so that X and Z limit pins are shared.
 #define LIMIT_PORT            GPIO_INPUT
@@ -65,11 +65,26 @@
 #define AUXOUTPUT1_PORT         GPIO_OUTPUT // Spindle enable
 #define AUXOUTPUT1_PIN          7
 #define AUXOUTPUT2_PORT         GPIO_OUTPUT // Spindle PWM (2 pin PWM port)
-#define AUXOUTPUT2_PIN          25
+#define AUXOUTPUT2_PIN          19
 #define AUXOUTPUT3_PORT         GPIO_OUTPUT // Spindle Direction (3 pin 'Neopixel" driver)
-#define AUXOUTPUT3_PIN          26
+#define AUXOUTPUT3_PIN          23
 #define AUXOUTPUT4_PORT         GPIO_OUTPUT // Stepper enable
 #define AUXOUTPUT4_PIN          24
+#define AUXOUTPUT5_PORT         GPIO_OUTPUT // Coolant Flood
+#define AUXOUTPUT5_PIN          25
+#define AUXOUTPUT6_PORT         GPIO_OUTPUT // Coolant Mist
+#define AUXOUTPUT6_PIN          26
+
+// Define flood and mist coolant enable output pins.
+#if COOLANT_ENABLE
+#define COOLANT_PORT            GPIO_OUTPUT
+#endif
+#if COOLANT_ENABLE & COOLANT_FLOOD
+#define COOLANT_FLOOD_PIN       AUXOUTPUT5_PIN
+#endif
+#if COOLANT_ENABLE & COOLANT_MIST
+#define COOLANT_MIST_PIN        AUXOUTPUT6_PIN
+#endif
 
 #if DRIVER_SPINDLE_ENABLE
 #define SPINDLE_PORT            GPIO_OUTPUT
@@ -77,10 +92,10 @@
 #if DRIVER_SPINDLE_ENABLE & SPINDLE_ENA
 #define SPINDLE_ENABLE_PIN      AUXOUTPUT1_PIN
 #endif
-#if DRIVER_SPINDLE_ENABLE & SPINDLE_PWM
+#if DRIVER_SPINDLE_ENABLE & SPINDLE_DIR
 #define SPINDLE_PWM_PIN         AUXOUTPUT2_PIN
 #endif
-#if DRIVER_SPINDLE_ENABLE & SPINDLE_DIR
+#if DRIVER_SPINDLE_ENABLE & SPINDLE_PWM
 #define SPINDLE_DIRECTION_PIN   AUXOUTPUT3_PIN
 #endif
 
