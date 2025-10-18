@@ -118,7 +118,7 @@ endif()
 target_compile_definitions(grblHAL PUBLIC RP2040)
 target_compile_definitions(grblHAL PUBLIC NEW_FATFS)
 
-target_compile_definitions(grblHAL PUBLIC BOARD_PICOBOB_DLX)
+target_compile_definitions(grblHAL PUBLIC BOARD_PICOHAL)
 target_compile_definitions(grblHAL PUBLIC _WIZCHIP_=5500)
 
 #target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=2)
