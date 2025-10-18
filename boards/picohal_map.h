@@ -50,7 +50,7 @@
 #if N_ABC_MOTORS > 0
 #define M3_AVAILABLE
 #define M3_DIRECTION_PIN      23
-#define M3_LIMIT_PIN          5  //shared with Z
+#define M3_LIMIT_PIN          15  //shared with Z
 #endif
 
 // Define homing/hard limit switch input pins.  Currently configured so that X and Z limit pins are shared.
@@ -60,16 +60,24 @@
 #define Z_LIMIT_PIN           5
 
 // Aux Outputs
-#define AUXOUTPUT0_PORT         GPIO_OUTPUT // MODBUS DIRECTION
-#define AUXOUTPUT0_PIN          27
+// #define AUXOUTPUT0_PORT         GPIO_OUTPUT // MODBUS DIRECTION
+// #define AUXOUTPUT0_PIN          27
 #define AUXOUTPUT1_PORT         GPIO_OUTPUT // Spindle enable
-#define AUXOUTPUT1_PIN          26
+#define AUXOUTPUT1_PIN          19
 #define AUXOUTPUT2_PORT         GPIO_OUTPUT // Spindle PWM (2 pin PWM port)
-#define AUXOUTPUT2_PIN          25
+#define AUXOUTPUT2_PIN          26
 #define AUXOUTPUT3_PORT         GPIO_OUTPUT // Spindle Direction (3 pin 'Neopixel" driver)
 #define AUXOUTPUT3_PIN          7
 #define AUXOUTPUT4_PORT         GPIO_OUTPUT // Stepper enable
-#define AUXOUTPUT4_PIN          24
+#define AUXOUTPUT4_PIN          23
+#define AUXOUTPUT5_PORT         GPIO_OUTPUT
+#define AUXOUTPUT5_PIN          20
+#define AUXOUTPUT6_PORT         GPIO_OUTPUT
+#define AUXOUTPUT6_PIN          21
+#define AUXOUTPUT7_PORT         GPIO_OUTPUT
+#define AUXOUTPUT7_PIN          22
+#define AUXOUTPUT8_PORT         GPIO_OUTPUT
+#define AUXOUTPUT8_PIN          24
 
 #if DRIVER_SPINDLE_ENABLE
 #define SPINDLE_PORT            GPIO_OUTPUT
@@ -82,6 +90,14 @@
 #endif
 #if DRIVER_SPINDLE_ENABLE & SPINDLE_DIR
 #define SPINDLE_DIRECTION_PIN   AUXOUTPUT3_PIN
+#endif
+
+// Define flood and mist coolant enable output pins.
+#if COOLANT_ENABLE
+#define COOLANT_PORT            GPIO_OUTPUT
+#endif
+#if COOLANT_ENABLE & COOLANT_FLOOD
+#define COOLANT_FLOOD_PIN           25
 #endif
 
 // Aux Inputs

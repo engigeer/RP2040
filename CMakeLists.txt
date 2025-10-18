@@ -121,18 +121,21 @@ target_compile_definitions(grblHAL PUBLIC NEW_FATFS)
 target_compile_definitions(grblHAL PUBLIC BOARD_PICOBOB_DLX)
 target_compile_definitions(grblHAL PUBLIC _WIZCHIP_=5500)
 
-target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=2)
-target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
-target_compile_definitions(grblHAL PUBLIC FTP_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=2)
+#target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC FTP_ENABLE=1)
 
 #target_compile_definitions(grblHAL PUBLIC I2C_ENABLE=1)
 #target_compile_definitions(grblHAL PUBLIC I2C_STROBE_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC KEYPAD_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC DISPLAY_ENABLE=9)
 
-target_compile_definitions(grblHAL PUBLIC MACROS_ENABLE=2)
-target_compile_definitions(grblHAL PUBLIC N_MACROS=6)
+#target_compile_definitions(grblHAL PUBLIC MACROS_ENABLE=2)
+#target_compile_definitions(grblHAL PUBLIC N_MACROS=6)
+target_compile_definitions(grblHAL PUBLIC FANS_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC SPINDLE0_ENABLE=12)
+
+target_compile_definitions(grblHAL PUBLIC LASER_COOLANT_ENABLE=1)
 
 if(ADD_WIFI)
     target_compile_definitions(grblHAL PUBLIC WIFI_ENABLE=1)
