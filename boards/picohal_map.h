@@ -24,7 +24,7 @@
 #error Trinamic plugin not supported!
 #endif
 
-#if N_ABC_MOTORS > 1
+#if N_ABC_MOTORS > 0
 #error "Axis configuration is not supported!"
 #endif
 
@@ -33,31 +33,31 @@
 
 // Define step pulse output pins.
 #define STEP_PORT             GPIO_PIO  // N_AXIS pin PIO SM
-#define STEP_PINS_BASE        16        // N_AXIS number of consecutive pins are used by PIO
+#define STEP_PINS_BASE        23        // N_AXIS number of consecutive pins are used by PIO
 
 // Define step direction output pins.
 #define DIRECTION_PORT        GPIO_OUTPUT
 #define DIRECTION_OUTMODE     GPIO_MAP
 #define X_DIRECTION_PIN       20
 #define Y_DIRECTION_PIN       21
-#define Z_DIRECTION_PIN       22
+#define Z_DIRECTION_PIN       26
 
 // Define stepper driver enable/disable output pin.
 #define ENABLE_PORT           GPIO_OUTPUT
-#define STEPPERS_ENABLE_PIN   24
+#define STEPPERS_ENABLE_PIN   22
 
 // Define ganged axis or A axis step pulse and step direction output pins.
-#if N_ABC_MOTORS > 0
-#define M3_AVAILABLE
-#define M3_DIRECTION_PIN      23
-#define M3_LIMIT_PIN          5  //shared with Z
-#endif
+// #if N_ABC_MOTORS > 0
+// #define M3_AVAILABLE
+// #define M3_DIRECTION_PIN      23
+// #define M3_LIMIT_PIN          5  //shared with Z
+// #endif
 
 // Define homing/hard limit switch input pins.  Currently configured so that X and Z limit pins are shared.
 #define LIMIT_PORT            GPIO_INPUT
-#define X_LIMIT_PIN           15
-#define Y_LIMIT_PIN           10
-#define Z_LIMIT_PIN           5
+#define X_LIMIT_PIN           6
+#define Y_LIMIT_PIN           6
+#define Z_LIMIT_PIN           6
 
 // Aux Outputs
 #define AUXOUTPUT0_PORT         GPIO_OUTPUT // MODBUS DIRECTION
@@ -65,11 +65,26 @@
 #define AUXOUTPUT1_PORT         GPIO_OUTPUT // Spindle enable
 #define AUXOUTPUT1_PIN          7
 #define AUXOUTPUT2_PORT         GPIO_OUTPUT // Spindle PWM (2 pin PWM port)
-#define AUXOUTPUT2_PIN          25
+#define AUXOUTPUT2_PIN          16
 #define AUXOUTPUT3_PORT         GPIO_OUTPUT // Spindle Direction (3 pin 'Neopixel" driver)
-#define AUXOUTPUT3_PIN          26
-#define AUXOUTPUT4_PORT         GPIO_OUTPUT // Stepper enable
-#define AUXOUTPUT4_PIN          24
+#define AUXOUTPUT3_PIN          17
+// #define AUXOUTPUT4_PORT         GPIO_OUTPUT // Stepper enable
+// #define AUXOUTPUT4_PIN          24
+// #define AUXOUTPUT5_PORT         GPIO_OUTPUT // Coolant Flood
+// #define AUXOUTPUT5_PIN          25
+// #define AUXOUTPUT6_PORT         GPIO_OUTPUT // Coolant Mist
+// #define AUXOUTPUT6_PIN          26
+
+// Define flood and mist coolant enable output pins.
+#if COOLANT_ENABLE
+#define COOLANT_PORT            GPIO_OUTPUT
+#endif
+#if COOLANT_ENABLE & COOLANT_FLOOD
+#define COOLANT_FLOOD_PIN       AUXOUTPUT2_PIN
+#endif
+#if COOLANT_ENABLE & COOLANT_MIST
+#define COOLANT_MIST_PIN        AUXOUTPUT3_PIN
+#endif
 
 #if DRIVER_SPINDLE_ENABLE
 #define SPINDLE_PORT            GPIO_OUTPUT
@@ -77,24 +92,24 @@
 #if DRIVER_SPINDLE_ENABLE & SPINDLE_ENA
 #define SPINDLE_ENABLE_PIN      AUXOUTPUT1_PIN
 #endif
-#if DRIVER_SPINDLE_ENABLE & SPINDLE_PWM
+#if DRIVER_SPINDLE_ENABLE & SPINDLE_DIR
 #define SPINDLE_PWM_PIN         AUXOUTPUT2_PIN
 #endif
-#if DRIVER_SPINDLE_ENABLE & SPINDLE_DIR
+#if DRIVER_SPINDLE_ENABLE & SPINDLE_PWM
 #define SPINDLE_DIRECTION_PIN   AUXOUTPUT3_PIN
 #endif
 
 // Aux Inputs
-#define AUXINPUT0_PIN           6  // CNC shield HOLD pin
-#define AUXINPUT1_PIN           11 // CNC shield RUN pin
-#define AUXINPUT2_PIN           28 // CNC shield A4 (ADC capable, 3.3V max)
-#define AUXINPUT3_PIN           29 // CNC shield A5 (ADC capable, 3.3V max)
+#define AUXINPUT0_PIN           15  // CNC shield HOLD pin
+#define AUXINPUT1_PIN           10 // CNC shield RUN pin
+#define AUXINPUT2_PIN           5 // CNC shield A4 (ADC capable, 3.3V max)
+//#define AUXINPUT3_PIN           29 // CNC shield A5 (ADC capable, 3.3V max)
 
 #undef CONTROL_ENABLE
 #define CONTROL_ENABLE 0
 
 #if PROBE_ENABLE
-#define PROBE_PIN               AUXINPUT3_PIN
+#define PROBE_PIN               AUXINPUT2_PIN
 #endif
 
 // Modbus 
