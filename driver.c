@@ -2971,6 +2971,8 @@ static bool assign_step_sm (PIO *pio, uint *sm, uint32_t pin)
 //UF2 bootloader entry via command
 #if USB_SERIAL_CDC
 
+static on_report_options_ptr on_report_options;
+
 status_code_t enter_uf2 (sys_state_t state, char *args)
 {
 
@@ -2984,6 +2986,8 @@ status_code_t enter_uf2 (sys_state_t state, char *args)
 
 static void onReportOptions (bool newopt)
 {
+    on_report_options(newopt);
+
     if(!newopt)
         report_plugin("Bootloader Entry", "0.01");
 }
@@ -3274,7 +3278,8 @@ bool driver_init (void)
         .n_commands = sizeof(boot_command_list) / sizeof(sys_command_t),
         .commands = boot_command_list
     };
-
+    
+    on_report_options = grbl.on_report_options;
     grbl.on_report_options = onReportOptions;
 
     system_register_commands(&boot_commands);
