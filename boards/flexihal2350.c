@@ -46,12 +46,12 @@ static void poll_motor_fault (void *data)
 
         uint_fast8_t idx;
 
-        for(idx = 0; idx < sizeof(fault_inputs) / sizeof(xbar_t); idx++) {
-            uint8_t axis = xbar_fault_pin_to_axis(fault_input[idx]->function);
+        for(idx = 0; idx < N_AXIS; idx++) {
+            uint8_t axis = xbar_fault_pin_to_axis(fault_inputs[idx].function);
 
             if(bit_istrue(settings.motor_fault_enable.mask, bit(axis))) {
-                if(EXPANDER_IN(fault_inputs[idx]->pin)^ bit_istrue(settings.motor_fault_invert.mask, bit(axis)))
-                    xbar_stepper_state_set(&stepper_status.fault, axis, fault_inputs[idx]->function >= Input_MotorFaultX_2); 
+                if(EXPANDER_IN(fault_inputs[idx].pin)^ bit_istrue(settings.motor_fault_invert.mask, bit(axis)))
+                    xbar_stepper_state_set(&stepper_status.fault, axis, fault_inputs[idx].function >= Input_MotorFaultX_2); 
             }
         }
 

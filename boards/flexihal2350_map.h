@@ -35,11 +35,14 @@
 #endif
 
 #define BOARD_NAME "FLEXIHAL2350"
-#define HAS_BOARD_INIT    1
+#define HAS_BOARD_INIT      1
 
 // Define support for FLEXGPIO RP2040 IO expander
+#if !FLEXGPIO_ENABLE
+#error "Board requires FLEXGPIO expander to be enabled!"
+#endif
+
 #define USE_EXPANDERS       1
-#define FLEXGPIO_ENABLE     1
 #define IOX_PIN_COUNT       32
 
 #undef I2C_ENABLE

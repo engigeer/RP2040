@@ -3519,7 +3519,7 @@ sr8_pio = sr8_delay_pio = sr8_hold_pio = pio0;
 
 xbar_t *get_motor_fault_inputs (void)
 {
-    return motor_fault_inputs != NULL ? &motor_fault_inputs : NULL;
+    return motor_fault_inputs[0].function ? motor_fault_inputs : NULL;
 }
 
 /* interrupt handlers */
