@@ -1631,7 +1631,11 @@ static control_signals_t __not_in_flash_func(systemGetState)(void)
 // Returns the probe triggered pin state.
 static bool probeGetState (void *input)
 {
-    return DIGITAL_IN(((input_signal_t *)input)->pin);
+    #ifdef USE_EXPANDERS // NOT THE BEST CONDITION TO CHECK FOR THIS
+        return EXPANDER_IN(((xbar_t *)input)->pin);
+    #else 
+        return DIGITAL_IN(((input_signal_t *)input)->pin);
+    #endif
 }
 
 #endif // DRIVER_PROBES
@@ -1718,18 +1722,19 @@ static bool aux_claim_explicit (aux_ctrl_t *aux_ctrl)
         switch(aux_ctrl->function) {
 #if PROBE_ENABLE
             case Input_Probe:
-                hal.driver_cap.probe = probe_add(Probe_Default, aux_ctrl->port, pin->cap.irq_mode, aux_ctrl->input, probeGetState);
+                // Using iox_pins is a bad idea here, but need to come up with something better
+                hal.driver_cap.probe = probe_add(Probe_Default, aux_ctrl->port, pin->cap.irq_mode, iox_pins[aux_ctrl->gpio.pin], probeGetState);
                 break;
 #endif
 #if PROBE2_ENABLE
             case Input_Probe2:
-                hal.driver_cap.probe2 = probe_add(Probe_2, aux_ctrl->port, pin->cap.irq_mode, aux_ctrl->input, probeGetState);
+                hal.driver_cap.probe2 = probe_add(Probe_2, aux_ctrl->port, pin->cap.irq_mode, iox_pins[aux_ctrl->gpio.pin], probeGetState);
                 break;
 
 #endif
 #if TOOLSETTER_ENABLE
             case Input_Toolsetter:
-                hal.driver_cap.toolsetter = probe_add(Probe_Toolsetter, aux_ctrl->port, pin->cap.irq_mode, aux_ctrl->input, probeGetState);
+                hal.driver_cap.toolsetter = probe_add(Probe_Toolsetter, aux_ctrl->port, pin->cap.irq_mode, iox_pins[aux_ctrl->gpio.pin], probeGetState);
                 break;
 #endif
 #if defined(RESET_PIN) && !ESTOP_ENABLE

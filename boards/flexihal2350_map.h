@@ -141,9 +141,9 @@
 #define AUXINPUT8_PIN           32  // Safety door / DR
 #define AUXINPUT9_PIN           30  // Cycle Start / RN
 
-#define AUXINPUT10_PIN          39  // Probe
-#define AUXINPUT11_PIN          8   // I2C strobe pin
-#define AUXINPUT12_PIN          31  // Expander MCU_IRQ Pin
+#define AUXINPUT10_PIN          8   // I2C strobe pin
+#define AUXINPUT11_PIN          31  // Expander MCU_IRQ Pin
+//#define AUXINPUT12_PIN        39  // Probe
 
 // Define user-control controls (cycle start, reset, feed hold) input pins.
 #if CONTROL_ENABLE & CONTROL_HALT
@@ -160,16 +160,22 @@
 #define SAFETY_DOOR_PIN         AUXINPUT8_PIN
 #endif
 
+#if TOOLSETTER_ENABLE
+#define TOOLSETTER_PORT         EXPANDER_PORT
+#define TOOLSETTER_PIN          3 //RP2040 pin
+#endif
+
 #if PROBE_ENABLE
-#define PROBE_PIN               AUXINPUT10_PIN
+#define PROBE_PORT              EXPANDER_PORT
+#define PROBE_PIN               4 //RP2040 pin
 #endif
 
 #if I2C_STROBE_ENABLE
-#define I2C_STROBE_PIN          AUXINPUT11_PIN
+#define I2C_STROBE_PIN          AUXINPUT10_PIN
 #endif
 
 #if FLEXGPIO_IRQ_ENABLE
-#define FLEXGPIO_IRQ_PIN        12 //AUXINPUT NUMBER
+#define FLEXGPIO_IRQ_PIN        11 //AUXINPUT NUMBER
 #endif
 
 // /Define per axis fault pins on expander
