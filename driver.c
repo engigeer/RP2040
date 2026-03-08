@@ -225,13 +225,13 @@ static bool IOInitDone = false;
 static status_code_t (*on_unknown_sys_command)(uint_fast16_t state, char *line, char *lcline);
 static volatile uint32_t elapsed_ticks = 0;
 static pin_group_pins_t limit_inputs;
+static xbar_t motor_fault_inputs[N_AXIS] = {};
 
 #ifdef USE_EXPANDERS
 #ifndef IOX_PIN_COUNT
 #define IOX_PIN_COUNT   N_AUX_DOUT_MAX
 #endif
 xbar_t *iox_pins[IOX_PIN_COUNT] = {};
-static xbar_t *iox_out[N_AUX_DOUT_MAX] = {};
 #endif
 
 #ifdef NEOPIXELS_PIN
@@ -353,7 +353,19 @@ static input_signal_t inputpin[] = {
     { .id = Input_Aux10, .port = GPIO_INPUT, .pin = AUXINPUT10_PIN, .group = PinGroup_AuxInput },
 #endif
 #ifdef AUXINPUT11_PIN
-    { .id = Input_Aux11, .port = GPIO_INPUT, .pin = AUXINPUT11_PIN, .group = PinGroup_AuxInput }
+    { .id = Input_Aux11, .port = GPIO_INPUT, .pin = AUXINPUT11_PIN, .group = PinGroup_AuxInput },
+#endif
+#ifdef AUXINPUT12_PIN
+    { .id = Input_Aux12, .port = GPIO_INPUT, .pin = AUXINPUT12_PIN, .group = PinGroup_AuxInput },
+#endif
+#ifdef AUXINPUT13_PIN
+    { .id = Input_Aux13, .port = GPIO_INPUT, .pin = AUXINPUT13_PIN, .group = PinGroup_AuxInput },
+#endif
+#ifdef AUXINPUT14_PIN
+    { .id = Input_Aux14, .port = GPIO_INPUT, .pin = AUXINPUT14_PIN, .group = PinGroup_AuxInput },
+#endif
+#ifdef AUXINPUT15_PIN
+    { .id = Input_Aux15, .port = GPIO_INPUT, .pin = AUXINPUT15_PIN, .group = PinGroup_AuxInput }
 #endif
 };
 
@@ -1733,6 +1745,18 @@ static bool aux_claim_explicit (aux_ctrl_t *aux_ctrl)
 #ifdef MPG_MODE_PIN
             case Input_MPGSelect:
                 mpg_pin = (input_signal_t *)aux_ctrl->input;
+                break;
+#endif
+#if MOTOR_FAULT_MASK
+            case Input_MotorFaultX:
+            case Input_MotorFaultY:
+            case Input_MotorFaultZ:
+            case Input_MotorFaultA:
+            case Input_MotorFaultB:
+            case Input_MotorFaultC:
+                uint8_t axis = xbar_fault_pin_to_axis(aux_ctrl->function);
+                motor_fault_inputs[axis] = *pin;
+                motor_fault_inputs[axis].function = aux_ctrl->function;
                 break;
 #endif
             default: break;
@@ -3203,6 +3227,7 @@ bool driver_init (void)
 
     hal.limits_cap = get_limits_cap();
     hal.home_cap = get_home_cap();
+    hal.motor_fault_cap = get_motor_fault_cap();
 #if defined(COOLANT_FLOOD_PIN) || OUT_SHIFT_REGISTER
     hal.coolant_cap.flood = On;
 #endif
@@ -3490,6 +3515,11 @@ sr8_pio = sr8_delay_pio = sr8_hold_pio = pio0;
     // No need to move version check before init.
     // Compiler will fail any signature mismatch for existing entries.
     return hal.version == 10;
+}
+
+xbar_t *get_motor_fault_inputs (void)
+{
+    return motor_fault_inputs[0].function ? motor_fault_inputs : NULL;
 }
 
 /* interrupt handlers */
