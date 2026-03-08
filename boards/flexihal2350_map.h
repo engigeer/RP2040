@@ -174,9 +174,9 @@
 
 // /Define per axis fault pins on expander
 #define X_MOTOR_FAULT_PORT          EXPANDER_PORT
-#define X_MOTOR_FAULT_PIN           5  //RP2040 pin
+#define X_MOTOR_FAULT_PIN           3  //RP2040 pin
 #define Y_MOTOR_FAULT_PORT          EXPANDER_PORT
-#define Y_MOTOR_FAULT_PIN           6  //RP2040 pin
+#define Y_MOTOR_FAULT_PIN           4  //RP2040 pin
 #define Z_MOTOR_FAULT_PORT          EXPANDER_PORT
 #define Z_MOTOR_FAULT_PIN           7  //RP2040 pin
 #if N_ABC_MOTORS > 0
