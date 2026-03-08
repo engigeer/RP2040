@@ -227,6 +227,10 @@ static volatile uint32_t elapsed_ticks = 0;
 static pin_group_pins_t limit_inputs;
 
 #ifdef USE_EXPANDERS
+#ifndef IOX_PIN_COUNT
+#define IOX_PIN_COUNT   N_AUX_DOUT_MAX
+#endif
+xbar_t *iox_pins[IOX_PIN_COUNT] = {};
 static xbar_t *iox_out[N_AUX_DOUT_MAX] = {};
 #endif
 
@@ -1678,6 +1682,14 @@ static bool aux_claim_explicit (aux_ctrl_t *aux_ctrl)
 {
     xbar_t *pin;
 
+#ifdef USE_EXPANDERS
+    if(aux_ctrl->gpio.port == (void *)EXPANDER_PORT) {
+        if((iox_pins[aux_ctrl->gpio.pin] = malloc(sizeof(xbar_t))))
+            memcpy(iox_pins[aux_ctrl->gpio.pin], aux_ctrl->input, sizeof(xbar_t));
+        else
+            aux_ctrl->port = IOPORT_UNASSIGNED;
+    }
+#endif
     if(aux_ctrl->input == NULL) {
 
         uint_fast8_t i = sizeof(inputpin) / sizeof(input_signal_t);
@@ -1736,8 +1748,8 @@ bool aux_out_claim_explicit (aux_ctrl_out_t *aux_ctrl)
 
 #ifdef USE_EXPANDERS
     if(aux_ctrl->gpio.port == (void *)EXPANDER_PORT) {
-        if((iox_out[aux_ctrl->gpio.pin] = malloc(sizeof(xbar_t))))
-            memcpy(iox_out[aux_ctrl->gpio.pin], aux_ctrl->output, sizeof(xbar_t));
+        if((iox_pins[aux_ctrl->gpio.pin] = malloc(sizeof(xbar_t))))
+            memcpy(iox_pins[aux_ctrl->gpio.pin], aux_ctrl->output, sizeof(xbar_t));
         else
             aux_ctrl->port = IOPORT_UNASSIGNED;
     } else
