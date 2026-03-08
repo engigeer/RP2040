@@ -78,8 +78,8 @@
 #define DIGITAL_OUT(pin, on) gpio_put(pin, on)
 #endif
 
-#define EXPANDER_IN(pin) (iox_out[pin] && iox_out[pin]->get_value(iox_out[pin]) != 0.0f)
-#define EXPANDER_OUT(pin, state) { if(iox_out[pin]) iox_out[pin]->set_value(iox_out[pin], (float)(state)); }
+#define EXPANDER_IN(pin) (iox_pins[pin] && iox_pins[pin]->get_value(iox_pins[pin]) != 0.0f)
+#define EXPANDER_OUT(pin, state) { if(iox_pins[pin]) iox_pins[pin]->set_value(iox_pins[pin], (float)(state)); }
 
 
 #define GPIO_IRQ_ALL (GPIO_IRQ_LEVEL_HIGH|GPIO_IRQ_LEVEL_LOW|GPIO_IRQ_EDGE_RISE|GPIO_IRQ_EDGE_FALL)
