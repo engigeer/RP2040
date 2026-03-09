@@ -225,7 +225,6 @@ static bool IOInitDone = false;
 static status_code_t (*on_unknown_sys_command)(uint_fast16_t state, char *line, char *lcline);
 static volatile uint32_t elapsed_ticks = 0;
 static pin_group_pins_t limit_inputs;
-static xbar_t motor_fault_inputs[N_AXIS] = {};
 
 #ifdef USE_EXPANDERS
 #ifndef IOX_PIN_COUNT
@@ -1719,9 +1718,10 @@ static bool aux_claim_explicit (aux_ctrl_t *aux_ctrl)
     }
 
     if((pin = aux_ctrl_claim_port(aux_ctrl))) {
+        memcpy(iox_pins[aux_ctrl->gpio.pin], pin, sizeof(xbar_t));
 
         if(xbar_is_motor_fault_in(aux_ctrl->function))
-            motor_fault_add_pin(aux_ctrl->input, pin);
+            motor_fault_add_pin(aux_ctrl->input, iox_pins[aux_ctrl->gpio.pin]); // code guard / adjust for non-expander
 
         else switch(aux_ctrl->function) {
 #if PROBE_ENABLE
@@ -1753,18 +1753,6 @@ static bool aux_claim_explicit (aux_ctrl_t *aux_ctrl)
 #ifdef MPG_MODE_PIN
             case Input_MPGSelect:
                 mpg_pin = (input_signal_t *)aux_ctrl->input;
-                break;
-#endif
-#if MOTOR_FAULT_MASK
-            case Input_MotorFaultX:
-            case Input_MotorFaultY:
-            case Input_MotorFaultZ:
-            case Input_MotorFaultA:
-            case Input_MotorFaultB:
-            case Input_MotorFaultC:
-                uint8_t axis = xbar_fault_pin_to_axis(aux_ctrl->function);
-                motor_fault_inputs[axis] = *pin;
-                motor_fault_inputs[axis].function = aux_ctrl->function;
                 break;
 #endif
             default: break;
@@ -3518,11 +3506,6 @@ sr8_pio = sr8_delay_pio = sr8_hold_pio = pio0;
     // No need to move version check before init.
     // Compiler will fail any signature mismatch for existing entries.
     return hal.version == 10;
-}
-
-xbar_t *get_motor_fault_inputs (void)
-{
-    return motor_fault_inputs[0].function ? motor_fault_inputs : NULL;
 }
 
 /* interrupt handlers */
