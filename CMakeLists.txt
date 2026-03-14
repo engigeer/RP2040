@@ -122,6 +122,7 @@ target_compile_definitions(grblHAL PUBLIC RP2040)
 target_compile_definitions(grblHAL PUBLIC NEW_FATFS)
 
 target_compile_definitions(grblHAL PUBLIC BOARD_FLEXIHAL2350)
+target_compile_definitions(grblHAL PUBLIC MAX_PORTS=32)
 
 # -- NETWORKING
 target_compile_definitions(grblHAL PUBLIC _WIZCHIP_=5500)

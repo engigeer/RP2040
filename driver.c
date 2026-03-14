@@ -1697,14 +1697,16 @@ __attribute__((weak)) void motor_fault_add_pin (input_signal_t *input, xbar_t *p
 static bool aux_claim_explicit (aux_ctrl_t *aux_ctrl)
 {
     xbar_t *pin;
+    int8_t n_ioxpin = -1;
 
 #ifdef USE_EXPANDERS
     if(aux_ctrl->gpio.port == (void *)EXPANDER_PORT) {
         if((iox_pins[aux_ctrl->gpio.pin] = malloc(sizeof(xbar_t))))
-            memcpy(iox_pins[aux_ctrl->gpio.pin], aux_ctrl->input, sizeof(xbar_t));
+            n_ioxpin = aux_ctrl->gpio.pin;
+            //memcpy(iox_pins[aux_ctrl->gpio.pin], aux_ctrl->input, sizeof(xbar_t));
         else
             aux_ctrl->port = IOPORT_UNASSIGNED;
-    }
+    } else
 #endif
     if(aux_ctrl->input == NULL) {
 
@@ -1718,12 +1720,17 @@ static bool aux_claim_explicit (aux_ctrl_t *aux_ctrl)
     }
 
     if((pin = aux_ctrl_claim_port(aux_ctrl))) {
-        memcpy(iox_pins[aux_ctrl->gpio.pin], pin, sizeof(xbar_t));
 
-        if(xbar_is_motor_fault_in(aux_ctrl->function))
-            motor_fault_add_pin(aux_ctrl->input, iox_pins[aux_ctrl->gpio.pin]); // code guard / adjust for non-expander
+        if(xbar_is_motor_fault_in(aux_ctrl->function)){
+#ifdef USE_EXPANDERS
+            if(n_ioxpin >= 0) {
+                memcpy(iox_pins[n_ioxpin], pin, sizeof(xbar_t));
+                motor_fault_add_pin(aux_ctrl->input, iox_pins[n_ioxpin]);
+            } else
+#endif
+        motor_fault_add_pin(aux_ctrl->input, pin);
 
-        else switch(aux_ctrl->function) {
+    } else switch(aux_ctrl->function) {
 #if PROBE_ENABLE
             case Input_Probe:
                 hal.driver_cap.probe = probe_add(Probe_Default, aux_ctrl->port, pin->cap.irq_mode, aux_ctrl->input, probeGetState);
