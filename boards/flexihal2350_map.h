@@ -43,12 +43,12 @@
 #endif
 
 #define USE_EXPANDERS       1
-#define IOX_PIN_COUNT       32
+#define IOX_PIN_COUNT       32 // need to increase if using picoHAL
 
 #undef I2C_ENABLE
 #undef EEPROM_ENABLE
 #define I2C_ENABLE    1
-#define EEPROM_ENABLE 2
+#define EEPROM_ENABLE 128
 
 #define LITTLEFS_ENABLE 0
 
