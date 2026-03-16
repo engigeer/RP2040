@@ -43,12 +43,12 @@
 #endif
 
 #define USE_EXPANDERS       1
-#define IOX_PIN_COUNT       32
+#define IOX_PIN_COUNT       32 // need to increase if using picoHAL
 
 #undef I2C_ENABLE
 #undef EEPROM_ENABLE
 #define I2C_ENABLE    1
-#define EEPROM_ENABLE 2
+#define EEPROM_ENABLE 128
 
 #define LITTLEFS_ENABLE 0
 
@@ -173,22 +173,17 @@
 #endif
 
 // /Define per axis fault pins on expander
-#define X_MOTOR_FAULT_PORT          EXPANDER_PORT
-#define X_MOTOR_FAULT_PIN           5  //RP2040 pin
-#define Y_MOTOR_FAULT_PORT          EXPANDER_PORT
-#define Y_MOTOR_FAULT_PIN           6  //RP2040 pin
-#define Z_MOTOR_FAULT_PORT          EXPANDER_PORT
+#define MOTOR_FAULT_PORT            EXPANDER_PORT
+#define X_MOTOR_FAULT_PIN           3  //RP2040 pin
+#define Y_MOTOR_FAULT_PIN           4  //RP2040 pin
 #define Z_MOTOR_FAULT_PIN           7  //RP2040 pin
 #if N_ABC_MOTORS > 0
-  #define M3_MOTOR_FAULT_PORT       EXPANDER_PORT
   #define M3_MOTOR_FAULT_PIN        8  //RP2040 pin
 #endif
 #if N_ABC_MOTORS >= 2
-  #define M4_MOTOR_FAULT_PORT       EXPANDER_PORT
   #define M4_MOTOR_FAULT_PIN        9  //RP2040 pin
 #endif
 #if N_ABC_MOTORS == 3
-  #define M5_MOTOR_FAULT_PORT       EXPANDER_PORT
   #define M5_MOTOR_FAULT_PIN        10 //RP2040 pin
 #endif
 

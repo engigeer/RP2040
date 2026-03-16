@@ -30,12 +30,26 @@
 
 //static driver_setup_ptr driver_setup;
 
-extern xbar_t *get_motor_fault_inputs (void);
 extern xbar_t *iox_pins[IOX_PIN_COUNT];
 
 static control_signals_get_state_ptr hal_control_get_state;
-static xbar_t *fault_inputs;
 static stepper_status_t stepper_status = {};
+
+typedef struct {
+    uint8_t n_pins;
+    struct {
+        uint8_t axis;
+        xbar_t *pin;
+    } motor[N_ABC_MOTORS + 3];
+} motor_pins_t;
+
+motor_pins_t fault_signals = {};
+
+void motor_fault_add_pin (input_signal_t *input, xbar_t *pin)
+{
+    fault_signals.motor[fault_signals.n_pins].pin = (xbar_t *)pin;
+    fault_signals.motor[fault_signals.n_pins++].axis = xbar_fault_pin_to_axis(pin->function);
+}
 
 static void poll_motor_fault (void *data)
 {
@@ -46,12 +60,10 @@ static void poll_motor_fault (void *data)
 
         uint_fast8_t idx;
 
-        for(idx = 0; idx < N_AXIS; idx++) {
-            uint8_t axis = xbar_fault_pin_to_axis(fault_inputs[idx].function);
-
-            if(bit_istrue(settings.motor_fault_enable.mask, bit(axis))) {
-                if(EXPANDER_IN(fault_inputs[idx].pin)^ bit_istrue(settings.motor_fault_invert.mask, bit(axis)))
-                    xbar_stepper_state_set(&stepper_status.fault, axis, fault_inputs[idx].function >= Input_MotorFaultX_2); 
+        for(idx = 0; idx < fault_signals.n_pins; idx++) {
+            if(bit_istrue(settings.motor_fault_enable.mask, bit(fault_signals.motor[idx].axis))) {
+                if(EXPANDER_IN(fault_signals.motor[idx].pin->pin)^ fault_signals.motor[idx].pin->mode.inverted)
+                    xbar_stepper_state_set(&stepper_status.fault, fault_signals.motor[idx].axis, fault_signals.motor[idx].pin->function >= Input_MotorFaultX2);
             }
         }
 
@@ -84,7 +96,7 @@ static control_signals_t getControlState (void)
 
 static void driverSetup (void *data)
 {
-    if((hal.signals_cap.motor_fault = settings.motor_fault_enable.value && (fault_inputs = get_motor_fault_inputs()))) {
+    if((hal.signals_cap.motor_fault = !!settings.motor_fault_enable.value && fault_signals.n_pins)) {
 
         task_add_delayed(poll_motor_fault, NULL, 25);
 
