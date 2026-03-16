@@ -62,7 +62,7 @@ static void poll_motor_fault (void *data)
 
         for(idx = 0; idx < fault_signals.n_pins; idx++) {
             if(bit_istrue(settings.motor_fault_enable.mask, bit(fault_signals.motor[idx].axis))) {
-                if(EXPANDER_IN(fault_signals.motor[idx].pin->pin)^ fault_signals.motor[idx].pin->mode.inverted)
+                if(EXPANDER_IN(fault_signals.motor[idx].pin->pin)^ bit_istrue(settings.motor_fault_invert.mask, bit(fault_signals.motor[idx].axis)))
                     xbar_stepper_state_set(&stepper_status.fault, fault_signals.motor[idx].axis, fault_signals.motor[idx].pin->function >= Input_MotorFaultX2);
             }
         }
