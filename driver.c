@@ -1628,7 +1628,11 @@ static control_signals_t __not_in_flash_func(systemGetState)(void)
 // Returns the probe triggered pin state.
 static bool probeGetState (void *input)
 {
-    return DIGITAL_IN(((input_signal_t *)input)->pin);
+    #if PROBE_PORT == GPIO_OUTPUT // what about toolsetter port?
+        return DIGITAL_IN(((input_signal_t *)input)->pin);
+    #elif PROBE_PORT == EXPANDER_PORT
+        return EXPANDER_IN(((xbar_t *)input)->pin);
+    #endif
 }
 
 #endif // DRIVER_PROBES
@@ -1720,6 +1724,7 @@ static bool aux_claim_explicit (aux_ctrl_t *aux_ctrl)
         if(n_ioxpin >= 0) {
             memcpy(iox_pins[aux_ctrl->gpio.pin], pin, sizeof(xbar_t));
             pin = iox_pins[n_ioxpin];
+            aux_ctrl->input = (xbar_t *)pin;
         }
 
         if(xbar_is_motor_fault_in(aux_ctrl->function))
