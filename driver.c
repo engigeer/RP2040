@@ -226,9 +226,10 @@ static status_code_t (*on_unknown_sys_command)(uint_fast16_t state, char *line, 
 static volatile uint32_t elapsed_ticks = 0;
 static pin_group_pins_t limit_inputs;
 
-#ifdef USE_EXPANDERS
-static xbar_t *iox_out[N_AUX_DOUT_MAX] = {};
+#ifndef IOX_PIN_COUNT
+#define IOX_PIN_COUNT   N_AUX_DOUT_MAX
 #endif
+xbar_t *iox_pins[IOX_PIN_COUNT] = {};
 
 #ifdef NEOPIXELS_PIN
 neopixel_cfg_t neopixel = { .intensity = 255 };
@@ -349,7 +350,19 @@ static input_signal_t inputpin[] = {
     { .id = Input_Aux10, .port = GPIO_INPUT, .pin = AUXINPUT10_PIN, .group = PinGroup_AuxInput },
 #endif
 #ifdef AUXINPUT11_PIN
-    { .id = Input_Aux11, .port = GPIO_INPUT, .pin = AUXINPUT11_PIN, .group = PinGroup_AuxInput }
+    { .id = Input_Aux11, .port = GPIO_INPUT, .pin = AUXINPUT11_PIN, .group = PinGroup_AuxInput },
+#endif
+#ifdef AUXINPUT12_PIN
+    { .id = Input_Aux12, .port = GPIO_INPUT, .pin = AUXINPUT12_PIN, .group = PinGroup_AuxInput },
+#endif
+#ifdef AUXINPUT13_PIN
+    { .id = Input_Aux13, .port = GPIO_INPUT, .pin = AUXINPUT13_PIN, .group = PinGroup_AuxInput },
+#endif
+#ifdef AUXINPUT14_PIN
+    { .id = Input_Aux14, .port = GPIO_INPUT, .pin = AUXINPUT14_PIN, .group = PinGroup_AuxInput },
+#endif
+#ifdef AUXINPUT15_PIN
+    { .id = Input_Aux15, .port = GPIO_INPUT, .pin = AUXINPUT15_PIN, .group = PinGroup_AuxInput }
 #endif
 };
 
@@ -1682,7 +1695,16 @@ __attribute__((weak)) void motor_fault_add_pin (input_signal_t *input, xbar_t *p
 static bool aux_claim_explicit (aux_ctrl_t *aux_ctrl)
 {
     xbar_t *pin;
+    int8_t n_ioxpin = -1;
 
+#ifdef USE_EXPANDERS
+    if(aux_ctrl->gpio.port == (void *)EXPANDER_PORT) {
+        if((iox_pins[aux_ctrl->gpio.pin] = malloc(sizeof(xbar_t))))
+            n_ioxpin = aux_ctrl->gpio.pin;
+        else
+            aux_ctrl->port = IOPORT_UNASSIGNED;
+    } else
+#endif
     if(aux_ctrl->input == NULL) {
 
         uint_fast8_t i = sizeof(inputpin) / sizeof(input_signal_t);
@@ -1695,6 +1717,10 @@ static bool aux_claim_explicit (aux_ctrl_t *aux_ctrl)
     }
 
     if((pin = aux_ctrl_claim_port(aux_ctrl))) {
+        if(n_ioxpin >= 0) {
+            memcpy(iox_pins[aux_ctrl->gpio.pin], pin, sizeof(xbar_t));
+            pin = iox_pins[n_ioxpin];
+        }
 
         if(xbar_is_motor_fault_in(aux_ctrl->function))
             motor_fault_add_pin(aux_ctrl->input, pin);
@@ -1744,8 +1770,8 @@ bool aux_out_claim_explicit (aux_ctrl_out_t *aux_ctrl)
 
 #ifdef USE_EXPANDERS
     if(aux_ctrl->gpio.port == (void *)EXPANDER_PORT) {
-        if((iox_out[aux_ctrl->gpio.pin] = malloc(sizeof(xbar_t))))
-            memcpy(iox_out[aux_ctrl->gpio.pin], aux_ctrl->output, sizeof(xbar_t));
+        if((iox_pins[aux_ctrl->gpio.pin] = malloc(sizeof(xbar_t))))
+            memcpy(iox_pins[aux_ctrl->gpio.pin], aux_ctrl->output, sizeof(xbar_t));
         else
             aux_ctrl->port = IOPORT_UNASSIGNED;
     } else
@@ -3195,6 +3221,7 @@ bool driver_init (void)
 
     hal.limits_cap = get_limits_cap();
     hal.home_cap = get_home_cap();
+    hal.motor_fault_cap = get_motor_fault_cap();
 #if defined(COOLANT_FLOOD_PIN) || OUT_SHIFT_REGISTER
     hal.coolant_cap.flood = On;
 #endif
