@@ -226,12 +226,10 @@ static status_code_t (*on_unknown_sys_command)(uint_fast16_t state, char *line, 
 static volatile uint32_t elapsed_ticks = 0;
 static pin_group_pins_t limit_inputs;
 
-#ifdef USE_EXPANDERS
 #ifndef IOX_PIN_COUNT
 #define IOX_PIN_COUNT   N_AUX_DOUT_MAX
 #endif
 xbar_t *iox_pins[IOX_PIN_COUNT] = {};
-#endif
 
 #ifdef NEOPIXELS_PIN
 neopixel_cfg_t neopixel = { .intensity = 255 };
