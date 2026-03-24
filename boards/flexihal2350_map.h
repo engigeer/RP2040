@@ -150,7 +150,7 @@
 
 #define AUXINPUT10_PIN          8   // I2C strobe pin
 #define AUXINPUT11_PIN          31  // Expander MCU_IRQ Pin
-//#define AUXINPUT12_PIN        39  // Probe
+#define AUXINPUT12_PIN          39  // Probe
 
 // Define user-control controls (cycle start, reset, feed hold) input pins.
 #if CONTROL_ENABLE & CONTROL_HALT
@@ -167,15 +167,19 @@
 #define SAFETY_DOOR_PIN         AUXINPUT8_PIN
 #endif
 
-#if TOOLSETTER_ENABLE
-#define TOOLSETTER_PORT         EXPANDER_PORT
-#define TOOLSETTER_PIN          3 //RP2040 pin
+#if PROBE_ENABLE == 1
+#define PROBE_PIN               AUXINPUT12_PIN
 #endif
 
-#if PROBE_ENABLE
-#define PROBE_PORT              EXPANDER_PORT
-#define PROBE_PIN               4 //RP2040 pin
-#endif
+// #if TOOLSETTER_ENABLE
+// #define TOOLSETTER_PORT         EXPANDER_PORT
+// #define TOOLSETTER_PIN          3 //RP2040 pin
+// #endif
+
+// #if PROBE_ENABLE == 1
+// #define PROBE_PORT              EXPANDER_PORT
+// #define PROBE_PIN               4 //RP2040 pin
+// #endif
 
 #if I2C_STROBE_ENABLE
 #define I2C_STROBE_PIN          AUXINPUT10_PIN
