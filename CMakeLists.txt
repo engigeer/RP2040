@@ -17,7 +17,7 @@ cmake_minimum_required(VERSION 3.13)
 option(ADD_HPGL "Add HPGL plugin" OFF)
  # Note: WiFi and Ethernet cannot be enabled at the same time!
 option(ADD_WIFI "Add WiFi networking" OFF)
-option(ADD_ETHERNET "Add Ethernet networking" OFF)
+option(ADD_ETHERNET "Add Ethernet networking" ON)
 option(ADD_BLUETOOTH "Add Bluetooth" OFF)
 # Set LWIP_DIR below to the root path of lwIP sources when the following is set ON!
 option(ADD_mDNS "Add mDNS service" OFF) 
@@ -26,7 +26,7 @@ option(ADD_MQTT "Add MQTT client API" OFF)
 option(AddMyPlugin "Add my_plugin.c to build" OFF)
 
 # Select the correct board in VSCode, the following line will be updated accordingly
-set(PICO_BOARD pico CACHE STRING "Board type")
+set(PICO_BOARD pimoroni_pga2350 CACHE STRING "Board type")
 
 include(pico_sdk_import.cmake)
 
@@ -51,6 +51,7 @@ include(fans/CMakeLists.txt)
 include(bluetooth/CMakeLists.txt)
 include(embroidery/CMakeLists.txt)
 include(plasma/CMakeLists.txt)
+include(picohal/CMakeLists.txt)
 include(laser/CMakeLists.txt)
 include(plugins/CMakeLists.txt)
 if(ADD_HPGL)
@@ -119,7 +120,49 @@ target_compile_definitions(grblHAL PUBLIC RP_MCU=2350)
 endif()
 target_compile_definitions(grblHAL PUBLIC RP2040)
 target_compile_definitions(grblHAL PUBLIC NEW_FATFS)
-#target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=1)
+
+target_compile_definitions(grblHAL PUBLIC BOARD_FLEXIHAL2350)
+target_compile_definitions(grblHAL PUBLIC N_AUX_DIN=40)
+target_compile_definitions(grblHAL PUBLIC N_AUX_DOUT=32)
+
+# -- NETWORKING
+target_compile_definitions(grblHAL PUBLIC _WIZCHIP_=5500)
+target_compile_definitions(grblHAL PUBLIC NETWORK_IPMODE=1) #0 = static, 1 = DHCP
+target_compile_definitions(grblHAL PUBLIC FTP_ENABLE=1)
+
+# -- KEYPAD
+target_compile_definitions(grblHAL PUBLIC KEYPAD_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC DISPLAY_ENABLE=9)
+target_compile_definitions(grblHAL PUBLIC MACROS_ENABLE=2)
+target_compile_definitions(grblHAL PUBLIC N_MACROS=5)
+
+# -- CONTROLS
+target_compile_definitions(grblHAL PUBLIC PROBE_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC TOOLSETTER_ENABLE=0)
+target_compile_definitions(grblHAL PUBLIC ESTOP_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC STOP_DISABLE_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC BLOCK_DELETE_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC SINGLE_BLOCK_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC SAFETY_DOOR_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC MOTOR_FAULT_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC FANS_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC LASER_COOLANT_ENABLE=1)
+
+# -- OTHER
+target_compile_definitions(grblHAL PUBLIC N_AXIS=6)
+target_compile_definitions(grblHAL PUBLIC ROTARY_FIX=1)
+target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC ENABLE_BACKLASH_COMPENSATION=1)
+target_compile_definitions(grblHAL PUBLIC SDCARD_ENABLE=2)
+target_compile_definitions(grblHAL PUBLIC MODBUS_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC PICOHAL_IO_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC PICOHAL_PORTS=8)
+target_compile_definitions(grblHAL PUBLIC FEEDOVERIDE_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC SPINDLE0_ENABLE=0) # SPINDLE_NONE = 0, SPINDLE_MY_SPINDLE = 30
+
+target_compile_definitions(grblHAL PUBLIC FLEXGPIO_IRQ_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC FLEXGPIO_ENABLE=1)
+
 
 if(ADD_WIFI)
     target_compile_definitions(grblHAL PUBLIC WIFI_ENABLE=1)
@@ -232,6 +275,7 @@ target_link_libraries(grblHAL PRIVATE
  bluetooth
  eeprom
  plasma
+ picohal
  misc_plugins
  embroidery
  tinyusb_device_unmarked
