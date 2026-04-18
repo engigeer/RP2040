@@ -49,7 +49,7 @@
 #ifdef PICOHAL_IO_ENABLE // need to increase if also using picoHAL IO expander
 #define IOX_PIN_COUNT       32 
 #else
-#define IOX_PIN_COUNT       48
+#define IOX_PIN_COUNT       32 + PICOHAL_PORTS
 #endif
 
 #undef I2C_ENABLE
@@ -167,9 +167,8 @@
 #define SAFETY_DOOR_PIN         AUXINPUT8_PIN
 #endif
 
-#if TOOLSETTER_ENABLE
-#define TOOLSETTER_PORT         EXPANDER_PORT
-#define TOOLSETTER_PIN          3 //RP2040 pin
+#if PROBE_ENABLE == 2
+#define PROBE_PIN               AUXINPUT12_PIN
 #endif
 
 #if PROBE_ENABLE
