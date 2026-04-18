@@ -227,7 +227,7 @@ static volatile uint32_t elapsed_ticks = 0;
 static pin_group_pins_t limit_inputs;
 
 #ifdef USE_EXPANDERS
-static xbar_t *iox_out[N_AUX_DOUT_MAX] = {};
+static xbar_t *iox_out[N_AUX_DOUT] = {};
 #endif
 
 #ifdef NEOPIXELS_PIN

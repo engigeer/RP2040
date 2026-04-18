@@ -113,10 +113,10 @@
 #define COOLANT_PORT            EXPANDER_PORT
 #endif
 #if COOLANT_ENABLE & COOLANT_MIST
-#define COOLANT_MIST_PIN        13 //RP2040 pin
+#define COOLANT_MIST_PIN        34 //PicoHAL pin
 #endif
 #if COOLANT_ENABLE & COOLANT_FLOOD
-#define COOLANT_FLOOD_PIN       14 //RP2040 pin
+#define COOLANT_FLOOD_PIN       35 //PicoHAL pin
 #endif
 
 #if DRIVER_SPINDLE_ENABLE
@@ -135,45 +135,40 @@
 #define SPINDLE_DIRECTION_PIN   12 //RP2040 pin
 #endif
 
-#define AUXINPUT0_PIN           47  // Encoder 2
-#define AUXINPUT1_PIN           46  // Encoder 2
-#define AUXINPUT2_PIN           45  // Encoder 2
+#define AUXINPUT0_PIN           27  // HD
+#define AUXINPUT1_PIN           30  // RN
+#define AUXINPUT2_PIN           24  // HALT
+#define AUXINPUT3_PIN           32  // Safety door / DR
 
-#define AUXINPUT3_PIN           9   // Encoder 1
-#define AUXINPUT4_PIN           10  // Encoder 1
-#define AUXINPUT5_PIN           11  // Encoder 1
+#define AUXINPUT4_PIN           9   // Door Override
+#define AUXINPUT5_PIN           10  // Feedhold
+#define AUXINPUT6_PIN           11  // Cycle Start
 
-#define AUXINPUT6_PIN           24  // Reset / HALT
-#define AUXINPUT7_PIN           27  // Feed Hold / HD
-#define AUXINPUT8_PIN           32  // Safety door / DR
-#define AUXINPUT9_PIN           30  // Cycle Start / RN
+#define AUXINPUT7_PIN           47  // Single Block
+#define AUXINPUT8_PIN           46  // Block Delete
+#define AUXINPUT9_PIN           45  // Optional Stop
 
 #define AUXINPUT10_PIN          8   // I2C strobe pin
 #define AUXINPUT11_PIN          31  // Expander MCU_IRQ Pin
-//#define AUXINPUT12_PIN        39  // Probe
+#define AUXINPUT12_PIN          39  // Probe
 
 // Define user-control controls (cycle start, reset, feed hold) input pins.
 #if CONTROL_ENABLE & CONTROL_HALT
-#define RESET_PIN               AUXINPUT6_PIN
+#define RESET_PIN               AUXINPUT2_PIN
 #endif
 #if CONTROL_ENABLE & CONTROL_FEED_HOLD
-#define FEED_HOLD_PIN           AUXINPUT7_PIN
+#define FEED_HOLD_PIN           AUXINPUT5_PIN
 #endif
 #if CONTROL_ENABLE & CONTROL_CYCLE_START
-#define CYCLE_START_PIN         AUXINPUT9_PIN
+#define CYCLE_START_PIN         AUXINPUT6_PIN
 #endif
 
 #if SAFETY_DOOR_ENABLE
-#define SAFETY_DOOR_PIN         AUXINPUT8_PIN
+#define SAFETY_DOOR_PIN         AUXINPUT3_PIN
 #endif
 
 #if PROBE_ENABLE == 2
 #define PROBE_PIN               AUXINPUT12_PIN
-#endif
-
-#if PROBE_ENABLE
-#define PROBE_PORT              EXPANDER_PORT
-#define PROBE_PIN               4 //RP2040 pin
 #endif
 
 #if I2C_STROBE_ENABLE
