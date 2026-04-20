@@ -127,7 +127,10 @@ target_compile_definitions(grblHAL PUBLIC N_AUX_DOUT=40)
 
 # -- NETWORKING
 target_compile_definitions(grblHAL PUBLIC _WIZCHIP_=5500)
-target_compile_definitions(grblHAL PUBLIC NETWORK_IPMODE=1) #0 = static, 1 = DHCP
+target_compile_definitions(grblHAL PUBLIC NETWORK_IPMODE=0) #0 = static, 1 = DHCP
+target_compile_definitions(grblHAL PUBLIC NETWORK_IP="192.168.3.200")
+target_compile_definitions(grblHAL PUBLIC NETWORK_GATEWAY="192.168.3.0")
+target_compile_definitions(grblHAL PUBLIC NETWORK_MASK="255.255.255.0")
 target_compile_definitions(grblHAL PUBLIC FTP_ENABLE=1)
 
 # -- KEYPAD

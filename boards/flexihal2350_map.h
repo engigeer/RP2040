@@ -46,12 +46,6 @@
 
 #define USE_EXPANDERS       1
 
-#ifdef PICOHAL_IO_ENABLE // need to increase if also using picoHAL IO expander
-#define IOX_PIN_COUNT       32 
-#else
-#define IOX_PIN_COUNT       32 + PICOHAL_PORTS
-#endif
-
 #undef I2C_ENABLE
 #undef EEPROM_ENABLE
 #define I2C_ENABLE    1
@@ -113,10 +107,10 @@
 #define COOLANT_PORT            EXPANDER_PORT
 #endif
 #if COOLANT_ENABLE & COOLANT_MIST
-#define COOLANT_MIST_PIN        34 //PicoHAL pin
+#define COOLANT_MIST_PIN        30 //PicoHAL pin
 #endif
 #if COOLANT_ENABLE & COOLANT_FLOOD
-#define COOLANT_FLOOD_PIN       35 //PicoHAL pin
+#define COOLANT_FLOOD_PIN       31 //PicoHAL pin
 #endif
 
 #if DRIVER_SPINDLE_ENABLE
