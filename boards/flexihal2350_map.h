@@ -144,7 +144,6 @@
 
 #define AUXINPUT10_PIN          8   // I2C strobe pin
 #define AUXINPUT11_PIN          31  // Expander MCU_IRQ Pin
-#define AUXINPUT12_PIN          39  // Probe
 
 // Define user-control controls (cycle start, reset, feed hold) input pins.
 #if CONTROL_ENABLE & CONTROL_HALT
@@ -162,6 +161,7 @@
 #endif
 
 #if PROBE_ENABLE == 2
+#define AUXINPUT12_PIN          39  // Probe
 #define PROBE_PIN               AUXINPUT12_PIN
 #endif
 

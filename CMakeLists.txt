@@ -140,7 +140,7 @@ target_compile_definitions(grblHAL PUBLIC MACROS_ENABLE=3)
 target_compile_definitions(grblHAL PUBLIC N_MACROS=8)
 
 # -- CONTROLS
-target_compile_definitions(grblHAL PUBLIC PROBE_ENABLE=2)
+target_compile_definitions(grblHAL PUBLIC PROBE_ENABLE=0)
 target_compile_definitions(grblHAL PUBLIC TOOLSETTER_ENABLE=0)
 target_compile_definitions(grblHAL PUBLIC ESTOP_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC STOP_DISABLE_ENABLE=1)
