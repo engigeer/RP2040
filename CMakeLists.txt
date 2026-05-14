@@ -51,6 +51,7 @@ include(fans/CMakeLists.txt)
 include(bluetooth/CMakeLists.txt)
 include(embroidery/CMakeLists.txt)
 include(plasma/CMakeLists.txt)
+include(picohal/CMakeLists.txt)
 include(laser/CMakeLists.txt)
 include(plugins/CMakeLists.txt)
 if(ADD_HPGL)
@@ -234,6 +235,7 @@ target_link_libraries(grblHAL PRIVATE
  bluetooth
  eeprom
  plasma
+ picohal
  misc_plugins
  embroidery
  tinyusb_device_unmarked
