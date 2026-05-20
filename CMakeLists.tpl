@@ -21,6 +21,8 @@ include(keypad/CMakeLists.txt)
 include(embroidery/CMakeLists.txt)
 include(laser/CMakeLists.txt)
 include(plasma/CMakeLists.txt)
+include(picohal/CMakeLists.txt)
+include(flexgpio/CMakeLists.txt)
 include(plugins/CMakeLists.txt)
 %include_libraries%
 
