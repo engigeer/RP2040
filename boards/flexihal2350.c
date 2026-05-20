@@ -48,7 +48,6 @@ motor_pins_t fault_signals = {};
 static probe_select_ptr probe_select;
 static probe_configure_ptr probe_configure;
 
-xbar_t probe_pins[2];
 probe_id_t active_probe = Probe_Default;
 
 // TODO: add code guards and assign pins based on board map instead of hardcoding?
@@ -131,13 +130,13 @@ bool onProbeSelect (probe_id_t probe_id)
     switch(probe_id) {
 
         case Probe_Default:
-                config0.debounce = On;
-                config1.debounce = Off;
+            ioport_enable_irq(probe_pin.port, (pin_irq_mode_t)IRQ_Mode_All, NULL);
+            ioport_enable_irq(toolsetter_pin.port, (pin_irq_mode_t)IRQ_Mode_None, NULL);
             break;    
 
         case Probe_Toolsetter:
-                config0.debounce = Off;
-                config1.debounce = On;
+            ioport_enable_irq(probe_pin.port, (pin_irq_mode_t)IRQ_Mode_None, NULL);
+            ioport_enable_irq(toolsetter_pin.port, (pin_irq_mode_t)IRQ_Mode_All, NULL);
             break;
 
         default:
@@ -146,11 +145,6 @@ bool onProbeSelect (probe_id_t probe_id)
 
     active_probe = probe_id;
     hal.probe.configure(false, false);
-
-    if(probe_pins[0].config)
-        probe_pins[0].config(&probe_pins[0], &config0, false);
-    if(probe_pins[1].config)
-        probe_pins[1].config(&probe_pins[1], &config1, false);
 
     return true;
 }
@@ -175,7 +169,6 @@ void probe_select_init (void)
         if(pin = ioport_claim(Port_Digital, Port_Input, &probe_pin.port, NULL)) {
             ioport_set_description(Port_Digital, Port_Input, probe_pin.port, "expander multiplex");
             ioport_set_function(pin, probe_pin.function, NULL);
-            probe_pins[0] = *pin;
         }
     } else 
         ok = false;
@@ -184,7 +177,6 @@ void probe_select_init (void)
         if(pin = ioport_claim(Port_Digital, Port_Input, &toolsetter_pin.port, NULL)) {
             ioport_set_description(Port_Digital, Port_Input, toolsetter_pin.port, "expander multiplex");
             ioport_set_function(pin, toolsetter_pin.function, NULL);
-            probe_pins[1] = *pin;
         }
     } else 
         ok = false;
