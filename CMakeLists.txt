@@ -132,27 +132,26 @@ target_compile_definitions(grblHAL PUBLIC N_AUX_DOUT=40)
 
 # -- NETWORKING
 target_compile_definitions(grblHAL PUBLIC _WIZCHIP_=5500)
-target_compile_definitions(grblHAL PUBLIC NETWORK_IPMODE=0) #0 = static, 1 = DHCP
+target_compile_definitions(grblHAL PUBLIC NETWORK_IPMODE=1) #0 = static, 1 = DHCP
 #target_compile_definitions(grblHAL PUBLIC LITTLEFS_ENABLE=1)
 
 # -- KEYPAD
 target_compile_definitions(grblHAL PUBLIC KEYPAD_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC DISPLAY_ENABLE=9)
-target_compile_definitions(grblHAL PUBLIC MACROS_ENABLE=3)
-target_compile_definitions(grblHAL PUBLIC N_MACROS=8)
+# target_compile_definitions(grblHAL PUBLIC MACROS_ENABLE=3)
+# target_compile_definitions(grblHAL PUBLIC N_MACROS=8)
 
 # -- CONTROLS
-target_compile_definitions(grblHAL PUBLIC PROBE_ENABLE=2)
+target_compile_definitions(grblHAL PUBLIC PROBE_ENABLE=0)
 target_compile_definitions(grblHAL PUBLIC ESTOP_ENABLE=1)
-target_compile_definitions(grblHAL PUBLIC SAFETY_DOOR_ENABLE=1)
+#target_compile_definitions(grblHAL PUBLIC SAFETY_DOOR_ENABLE=1)
 # -- OTHER
-target_compile_definitions(grblHAL PUBLIC N_AXIS=6)
-target_compile_definitions(grblHAL PUBLIC SDCARD_ENABLE=2)
-target_compile_definitions(grblHAL PUBLIC MODBUS_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC N_AXIS=3)
+#target_compile_definitions(grblHAL PUBLIC SDCARD_ENABLE=2)
+#target_compile_definitions(grblHAL PUBLIC MODBUS_ENABLE=1)
 #target_compile_definitions(grblHAL PUBLIC PICOHAL_IO_ENABLE=1)
 #target_compile_definitions(grblHAL PUBLIC PICOHAL_PORTS=8)
 
-target_compile_definitions(grblHAL PUBLIC FLEXGPIO_IRQ_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC FLEXGPIO_ENABLE=1)
 
 
