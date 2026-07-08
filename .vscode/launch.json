@@ -47,6 +47,18 @@
             ]
         },
         {
+            "name": "Pico Attach (OpenOCD)",
+            "cwd": "${workspaceRoot}",
+            "executable": "${command:raspberry-pi-pico.launchTargetPath}",
+            "request": "attach",
+            "type": "cortex-debug",
+            "servertype": "external",
+            "gdbTarget": "localhost:3333",
+            "gdbPath": "${command:raspberry-pi-pico.getGDBPath}",
+            "device": "${command:raspberry-pi-pico.getChipUppercase}",
+            "svdFile": "${userHome}/.pico-sdk/sdk/2.1.1/src/${command:raspberry-pi-pico.getChip}/hardware_regs/${command:raspberry-pi-pico.getChipUppercase}.svd"
+        },
+        {
             "name": "Pico Debug (C++ Debugger)",
             "type": "cppdbg",
             "request": "launch",
