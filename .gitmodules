@@ -49,3 +49,6 @@
 [submodule "flexgpio"]
 	path = flexgpio
 	url = https://github.com/engigeer/plugin_FlexGPIO
+[submodule "polar_interp"]
+	path = polar_interp
+	url = https://github.com/engigeer/Plugin_polar_interp/

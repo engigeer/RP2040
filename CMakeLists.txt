@@ -53,6 +53,7 @@ include(embroidery/CMakeLists.txt)
 include(plasma/CMakeLists.txt)
 include(picohal/CMakeLists.txt)
 include(flexgpio/CMakeLists.txt)
+include(polar_interp/CMakeLists.txt)
 include(laser/CMakeLists.txt)
 include(plugins/CMakeLists.txt)
 if(ADD_HPGL)
@@ -177,7 +178,8 @@ target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC ENABLE_BACKLASH_COMPENSATION=1)
 target_compile_definitions(grblHAL PUBLIC N_TOOLS=7)
 target_compile_definitions(grblHAL PUBLIC FEED_OVERRIDE_ENABLE=1)
-
+target_compile_definitions(grblHAL PUBLIC KINEMATICS_API=1)
+target_compile_definitions(grblHAL PUBLIC POLAR_INTERP_ENABLE=1)
 
 if(ADD_WIFI)
     target_compile_definitions(grblHAL PUBLIC WIFI_ENABLE=1)
@@ -292,6 +294,7 @@ target_link_libraries(grblHAL PRIVATE
  plasma
  picohal
  flexgpio
+ polar_interp
  misc_plugins
  embroidery
  tinyusb_device_unmarked
