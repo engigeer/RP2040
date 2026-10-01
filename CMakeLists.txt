@@ -168,6 +168,10 @@ target_compile_definitions(grblHAL PUBLIC PICOHAL_PORTS=8)
 target_compile_definitions(grblHAL PUBLIC FEED_OVERRIDE_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC SPINDLE0_ENABLE=30) # SPINDLE_NONE = 0, SPINDLE_MY_SPINDLE = 30
 
+target_compile_definitions(grblHAL PUBLIC MPG_ENABLE=2)
+target_compile_definitions(grblHAL PUBLIC MPG_STREAM=1)
+target_compile_definitions(grblHAL PUBLIC N_TOOLS=7)
+
 target_compile_definitions(grblHAL PUBLIC FLEXGPIO_ENABLE=1)
 
 
