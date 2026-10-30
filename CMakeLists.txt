@@ -146,6 +146,10 @@ target_compile_definitions(grblHAL PUBLIC DISPLAY_ENABLE=9)
 target_compile_definitions(grblHAL PUBLIC MACROS_ENABLE=3)
 target_compile_definitions(grblHAL PUBLIC N_MACROS=8)
 
+# -- MPG
+target_compile_definitions(grblHAL PUBLIC MPG_ENABLE=2)
+target_compile_definitions(grblHAL PUBLIC MPG_STREAM=1)
+
 # -- CONTROLS
 target_compile_definitions(grblHAL PUBLIC PROBE_ENABLE=2)
 target_compile_definitions(grblHAL PUBLIC TOOLSETTER_ENABLE=0)
@@ -157,20 +161,22 @@ target_compile_definitions(grblHAL PUBLIC SAFETY_DOOR_ENABLE=1)
 
 # -- LASER SPECIFIC
 target_compile_definitions(grblHAL PUBLIC FANS_ENABLE=2)
+target_compile_definitions(grblHAL PUBLIC MODBUS_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC PICOHAL_IO_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC PICOHAL_PORTS=8)
+target_compile_definitions(grblHAL PUBLIC SPINDLE0_ENABLE=30) # SPINDLE_NONE = 0, SPINDLE_MY_SPINDLE = 30
+
+# -- FLEXIHAL SPECIFIC
+target_compile_definitions(grblHAL PUBLIC FLEXGPIO_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC SDCARD_ENABLE=2)
 
 # -- OTHER
 target_compile_definitions(grblHAL PUBLIC N_AXIS=4)
 target_compile_definitions(grblHAL PUBLIC ROTARY_FIX=1)
 target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC ENABLE_BACKLASH_COMPENSATION=1)
-target_compile_definitions(grblHAL PUBLIC SDCARD_ENABLE=2)
-target_compile_definitions(grblHAL PUBLIC MODBUS_ENABLE=1)
-target_compile_definitions(grblHAL PUBLIC PICOHAL_IO_ENABLE=1)
-target_compile_definitions(grblHAL PUBLIC PICOHAL_PORTS=8)
+target_compile_definitions(grblHAL PUBLIC N_TOOLS=7)
 target_compile_definitions(grblHAL PUBLIC FEED_OVERRIDE_ENABLE=1)
-target_compile_definitions(grblHAL PUBLIC SPINDLE0_ENABLE=30) # SPINDLE_NONE = 0, SPINDLE_MY_SPINDLE = 30
-
-target_compile_definitions(grblHAL PUBLIC FLEXGPIO_ENABLE=1)
 
 
 if(ADD_WIFI)
