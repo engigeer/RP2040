@@ -177,6 +177,7 @@ target_compile_definitions(grblHAL PUBLIC NGC_EXPRESSIONS_ENABLE=1)
 target_compile_definitions(grblHAL PUBLIC ENABLE_BACKLASH_COMPENSATION=1)
 target_compile_definitions(grblHAL PUBLIC N_TOOLS=7)
 target_compile_definitions(grblHAL PUBLIC FEED_OVERRIDE_ENABLE=1)
+target_compile_definitions(grblHAL PUBLIC REPORT_ECHO_LINE_RECEIVED=0)
 
 
 if(ADD_WIFI)
